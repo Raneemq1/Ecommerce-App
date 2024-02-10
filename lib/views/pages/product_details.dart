@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/model/product.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
+import 'package:ecommerce_app/views/widgets/counter.dart';
 import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
@@ -55,16 +56,22 @@ class _ProductDetailsState extends State<ProductDetails> {
                       height: 5,
                     ),
                     Row(
+                      mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Icon(
-                          Icons.star,
-                          size: 16,
-                          color: AppColors.orange,
+                        Row(
+                          children: [
+                            Icon(
+                              Icons.star,
+                              size: 16,
+                              color: AppColors.orange,
+                            ),
+                            SizedBox(
+                              width: 2,
+                            ),
+                            Text('4.8'),
+                          ],
                         ),
-                        SizedBox(
-                          width: 2,
-                        ),
-                        Text('4.8'),
+                        Counter(),
                       ],
                     ),
                     SizedBox(
