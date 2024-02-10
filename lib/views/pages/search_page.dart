@@ -86,7 +86,7 @@ class SearchPage extends StatelessWidget {
                             EdgeInsets.symmetric(vertical: 10, horizontal: 14),
                         child: Row(
                           children: [
-                            Text('Shose'),
+                            Text('SweatShirt'),
                             SizedBox(
                               width: 2,
                             ),
@@ -112,7 +112,7 @@ class SearchPage extends StatelessWidget {
                             EdgeInsets.symmetric(vertical: 10, horizontal: 14),
                         child: Row(
                           children: [
-                            Text('Shose'),
+                            Text('Clothes'),
                             SizedBox(
                               width: 2,
                             ),
@@ -134,7 +134,7 @@ class SearchPage extends StatelessWidget {
                             EdgeInsets.symmetric(vertical: 10, horizontal: 14),
                         child: Row(
                           children: [
-                            Text('Shose'),
+                            Text('Vegatabels'),
                             SizedBox(
                               width: 2,
                             ),
