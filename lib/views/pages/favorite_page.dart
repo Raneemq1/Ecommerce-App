@@ -19,7 +19,9 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
     super.initState();
-    filteredProducts = dummy_product;
+    filteredProducts = dummy_product.where((product) {
+      return product.isFav == true;
+    }).toList();
   }
 
   @override
@@ -80,15 +82,18 @@ class _FavoritePageState extends State<FavoritePage> {
                           }
 
                           filteredProducts = dummy_product.where((product) {
-                            return dummy_categories[index].categoryName ==
-                                dummy_categories[
-                                        int.parse(product.productCategoryId) -
+                            return product.isFav == true &&
+                                dummy_categories[index].categoryName ==
+                                    dummy_categories[int.parse(
+                                                product.productCategoryId) -
                                             1]
-                                    .categoryName;
+                                        .categoryName;
                           }).toList();
 
                           if (selected == -1) {
-                            filteredProducts = dummy_product;
+                            filteredProducts = dummy_product.where((product) {
+                              return product.isFav == true;
+                            }).toList();
                           }
                         });
                       },
