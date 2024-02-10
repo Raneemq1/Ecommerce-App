@@ -13,22 +13,22 @@ class _CounterState extends State<Counter> {
 
   @override
   Widget build(BuildContext context) {
-    return  DecoratedBox(
-      decoration: const BoxDecoration(
-        color: AppColors.bgColor,
-      ),
-      child: Padding(
-        padding: const EdgeInsets.all(8.0),
-        child: Row(
-          children: [
-            InkWell(
-              onTap: () {
-                setState(() {
-                  if (counter != 0) {
-                    counter--;
-                  }
-                });
-              },
+    return Row(
+      children: [
+        InkWell(
+          onTap: () {
+            setState(() {
+              if (counter != 0) {
+                counter--;
+              }
+            });
+          },
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.grey.withOpacity(0.1),
+            ),
+            child: Padding(
+              padding: const EdgeInsets.only(right: 5, left: 5),
               child: Text(
                 '-',
                 style: Theme.of(context)
@@ -37,23 +37,30 @@ class _CounterState extends State<Counter> {
                     .copyWith(fontSize: 20),
               ),
             ),
-            const SizedBox(
-              width: 10,
+          ),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        Text(
+          counter.toString(),
+          style: Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
+        ),
+        const SizedBox(
+          width: 10,
+        ),
+        InkWell(
+          onTap: () {
+            setState(() {
+              counter++;
+            });
+          },
+          child: DecoratedBox(
+            decoration: BoxDecoration(
+              color: AppColors.grey.withOpacity(0.1),
             ),
-            Text(
-              counter.toString(),
-              style:
-                  Theme.of(context).textTheme.bodyLarge!.copyWith(fontSize: 20),
-            ),
-            const SizedBox(
-              width: 10,
-            ),
-            InkWell(
-              onTap: () {
-                setState(() {
-                  counter++;
-                });
-              },
+            child: Padding(
+              padding: const EdgeInsets.only(right: 5, left: 5),
               child: Text(
                 '+',
                 style: Theme.of(context)
@@ -62,9 +69,9 @@ class _CounterState extends State<Counter> {
                     .copyWith(fontSize: 20),
               ),
             ),
-          ],
+          ),
         ),
-      ),
+      ],
     );
   }
 }
