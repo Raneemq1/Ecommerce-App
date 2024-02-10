@@ -26,7 +26,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    late Product updatedProduct;
+    late int removedIndex;
     return SingleChildScrollView(
       child: Padding(
         padding: const EdgeInsets.all(20),
@@ -81,6 +81,7 @@ class _FavoritePageState extends State<FavoritePage> {
                             selected = -1;
                           }
 
+                          //to put a favorite products from certain category
                           filteredProducts = dummy_product.where((product) {
                             return product.isFav == true &&
                                 dummy_categories[index].categoryName ==
@@ -91,6 +92,7 @@ class _FavoritePageState extends State<FavoritePage> {
                           }).toList();
 
                           if (selected == -1) {
+                            //to put a favorite products with no constrains on category name
                             filteredProducts = dummy_product.where((product) {
                               return product.isFav == true;
                             }).toList();
@@ -125,75 +127,100 @@ class _FavoritePageState extends State<FavoritePage> {
             const SizedBox(
               height: 20,
             ),
-            GridView.builder(
-                shrinkWrap: true,
-                physics: const NeverScrollableScrollPhysics(),
-                gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-                    crossAxisCount: 2,
-                    mainAxisSpacing: 10,
-                    crossAxisSpacing: 10),
-                itemCount: filteredProducts.length,
-                itemBuilder: (context, index) {
-                  return InkWell(
-                    onTap: () {
-                      Navigator.of(context, rootNavigator: true).push(
-                          MaterialPageRoute(
-                              builder: (context) => ProductDetails(
-                                  product: filteredProducts[index])));
-                    },
-                    child: Card(
-                      child: Stack(children: [
-                        Column(
-                          mainAxisAlignment: MainAxisAlignment.center,
-                          crossAxisAlignment: CrossAxisAlignment.center,
-                          children: [
-                            Center(
-                              child: CachedNetworkImage(
-                                  imageUrl: filteredProducts[index].productImg,
-                                  height: 100,
-                                  width: 150,
-                                  fit: BoxFit.contain),
+            filteredProducts.isEmpty
+                //note: expanded inside col within singleScroll child view
+                ? const SizedBox(
+                    height: 350,
+                    child: Expanded(
+                      child: Center(
+                        child: Text('no favorite products yet'),
+                      ),
+                    ),
+                  )
+                : GridView.builder(
+                    shrinkWrap: true,
+                    physics: const NeverScrollableScrollPhysics(),
+                    gridDelegate:
+                        const SliverGridDelegateWithFixedCrossAxisCount(
+                            crossAxisCount: 2,
+                            mainAxisSpacing: 10,
+                            crossAxisSpacing: 10),
+                    itemCount: filteredProducts.length,
+                    itemBuilder: (context, index) {
+                      return InkWell(
+                        onTap: () {
+                          Navigator.of(context, rootNavigator: true).push(
+                              MaterialPageRoute(
+                                  builder: (context) => ProductDetails(
+                                      product: filteredProducts[index])));
+                        },
+                        child: Card(
+                          child: Stack(children: [
+                            Column(
+                              mainAxisAlignment: MainAxisAlignment.center,
+                              crossAxisAlignment: CrossAxisAlignment.center,
+                              children: [
+                                Center(
+                                  child: CachedNetworkImage(
+                                      imageUrl:
+                                          filteredProducts[index].productImg,
+                                      height: 100,
+                                      width: 150,
+                                      fit: BoxFit.contain),
+                                ),
+                                const SizedBox(
+                                  height: 10,
+                                ),
+                                Text(filteredProducts[index].productName)
+                              ],
                             ),
-                            const SizedBox(
-                              height: 10,
-                            ),
-                            Text(filteredProducts[index].productName)
-                          ],
-                        ),
-                        Positioned(
-                          top: 0,
-                          right: 0,
-                          child: InkWell(
-                            onTap: () {
-                              if (filteredProducts[index].isFav == true) {
-                                updatedProduct = filteredProducts[index]
-                                    .copyWith(isFav: false);
-                              } else {
-                                updatedProduct = filteredProducts[index]
-                                    .copyWith(isFav: true);
-                              }
-                              setState(() {
-                                filteredProducts[index] = updatedProduct;
-                              });
-                            },
-                            child: DecoratedBox(
-                              decoration: BoxDecoration(
-                                  color: AppColors.bgColor,
-                                  borderRadius: BorderRadius.circular(10)),
-                              child: Icon(
-                                filteredProducts[index].isFav == true
-                                    ? Icons.favorite
-                                    : Icons.favorite_outline,
-                                color: AppColors.orange,
-                                size: 22,
+                            Positioned(
+                              top: 0,
+                              right: 0,
+                              child: InkWell(
+                                onTap: () {
+                                  //unfavorite any item
+                                  setState(() {
+                                    if (filteredProducts[index].isFav == true) {
+                                      filteredProducts[index] =
+                                          filteredProducts[index]
+                                              .copyWith(isFav: false);
+                                    }
+                                    //update global dummy list
+                                    removedIndex = dummy_product.indexWhere(
+                                        (product) =>
+                                            product.productName ==
+                                            filteredProducts[index]
+                                                .productName);
+                                    if (removedIndex != -1) {
+                                      dummy_product[removedIndex] =
+                                          dummy_product[removedIndex].copyWith(
+                                        isFav: false,
+                                      );
+                                    }
+                                    //remove from filtered list
+                                    filteredProducts
+                                        .remove(filteredProducts[index]);
+                                  });
+                                },
+                                child: DecoratedBox(
+                                  decoration: BoxDecoration(
+                                      color: AppColors.bgColor,
+                                      borderRadius: BorderRadius.circular(10)),
+                                  child: Icon(
+                                    filteredProducts[index].isFav == true
+                                        ? Icons.favorite
+                                        : Icons.favorite_outline,
+                                    color: AppColors.orange,
+                                    size: 22,
+                                  ),
+                                ),
                               ),
                             ),
-                          ),
+                          ]),
                         ),
-                      ]),
-                    ),
-                  );
-                }),
+                      );
+                    }),
           ],
         ),
       ),

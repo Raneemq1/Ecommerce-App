@@ -10,21 +10,21 @@ class CustomBottomBar extends StatelessWidget {
 
   List<Widget> _buildScreens() {
     return [
-      HomePage(),
-      FavoritePage(),
+      const HomePage(),
+      const FavoritePage(),
     ];
   }
 
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.home),
+        icon:const Icon(Icons.home),
         title: ("Home"),
         activeColorPrimary: AppColors.blue,
         inactiveColorPrimary: AppColors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon: Icon(Icons.favorite),
+        icon:const Icon(Icons.favorite),
         title: ("Favorite"),
         activeColorPrimary: AppColors.blue,
         inactiveColorPrimary: AppColors.grey,

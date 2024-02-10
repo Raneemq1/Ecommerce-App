@@ -214,8 +214,8 @@ class SearchPage extends StatelessWidget {
                                             MaterialStatePropertyAll(
                                                 dummy_product[index].isFav ==
                                                         true
-                                                    ? AppColors.red
-                                                    : AppColors.blue)),
+                                                    ? AppColors.blue
+                                                    : AppColors.red)),
                                   )
                                 ]),
                           ));
