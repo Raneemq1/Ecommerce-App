@@ -5,9 +5,14 @@ import 'package:ecommerce_app/views/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
 
-class CustomBottomBar extends StatelessWidget {
+class CustomBottomBar extends StatefulWidget {
   const CustomBottomBar({super.key});
 
+  @override
+  State<CustomBottomBar> createState() => _CustomBottomBarState();
+}
+
+class _CustomBottomBarState extends State<CustomBottomBar> {
   List<Widget> _buildScreens() {
     return [
       const HomePage(),
@@ -37,6 +42,7 @@ class CustomBottomBar extends StatelessWidget {
     PersistentTabController _controller;
 
     _controller = PersistentTabController(initialIndex: 0);
+
     return Scaffold(
         appBar: AppBar(
           actions: [
@@ -86,12 +92,13 @@ class CustomBottomBar extends StatelessWidget {
           controller: _controller,
           screens: _buildScreens(),
           items: _navBarsItems(),
+
           confineInSafeArea: true,
           backgroundColor: AppColors.white, // Default is Colors.white.
           handleAndroidBackButtonPress: true, // Default is true.
           resizeToAvoidBottomInset:
               true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-          stateManagement: true, // Default is true.
+          stateManagement: false, // put it false to prevent saving scroll position
           hideNavigationBarWhenKeyboardShows:
               true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
           decoration: NavBarDecoration(

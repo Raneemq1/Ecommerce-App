@@ -81,7 +81,7 @@ class _HomeTapState extends State<HomeTap> {
                             const SizedBox(
                               height: 10,
                             ),
-                            Text(dummy_product[index].productName)
+                            Text(dummy_product[index].productName),
                           ],
                         ),
                         Positioned(

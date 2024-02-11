@@ -24,7 +24,6 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    
     late int removedIndex;
     return SingleChildScrollView(
       child: Padding(
@@ -175,19 +174,23 @@ class _FavoritePageState extends State<FavoritePage> {
                                 onTap: () {
                                   //unfavorite any item
                                   setState(() {
+                                    print(
+                                        'raneem2 ${filteredProducts[index].isFav}');
                                     if (filteredProducts[index].isFav) {
-                                      filteredProducts[index] =
-                                          filteredProducts[index]
-                                              .copyWith(isFav: false);
                                       //update global list
                                       removedIndex = dummy_product.indexWhere(
                                           (product) =>
-                                              product.productId ==
+                                              product.productName ==
                                               filteredProducts[index]
-                                                  .productId);
-                                      dummy_product[removedIndex] =
-                                          dummy_product[removedIndex]
-                                              .copyWith(isFav: false);
+                                                  .productName);
+
+                                      if (removedIndex != -1) {
+                                        // Ensure the product was found
+                                        dummy_product[removedIndex] =
+                                            dummy_product[removedIndex]
+                                                .copyWith(isFav: false);
+                                      }
+                                      //remove the item from favProducts
                                       favProduct
                                           .remove(filteredProducts[index]);
                                     }
