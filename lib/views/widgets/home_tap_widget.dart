@@ -89,10 +89,10 @@ class _HomeTapState extends State<HomeTap> {
                           right: 0,
                           child: InkWell(
                             onTap: () {
-                              if (dummy_product[index].isFav == true) {
+                              //check favorite icon and add to favProduct list
+                              if (dummy_product[index].isFav) {
                                 updatedProduct =
                                     dummy_product[index].copyWith(isFav: false);
-                                dummy_product[index] = updatedProduct;
                               } else {
                                 updatedProduct =
                                     dummy_product[index].copyWith(isFav: true);
@@ -101,8 +101,10 @@ class _HomeTapState extends State<HomeTap> {
                                 dummy_product[index] = updatedProduct;
                                 if (updatedProduct.isFav) {
                                   favProduct.add(updatedProduct);
-                                }else{
-                                  favProduct.removeWhere((product) =>product.productId==updatedProduct.productId );
+                                } else {
+                                  favProduct.removeWhere((product) =>
+                                      product.productId ==
+                                      updatedProduct.productId);
                                 }
                               });
                             },

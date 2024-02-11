@@ -18,13 +18,13 @@ class CustomBottomBar extends StatelessWidget {
   List<PersistentBottomNavBarItem> _navBarsItems() {
     return [
       PersistentBottomNavBarItem(
-        icon:const Icon(Icons.home),
+        icon: const Icon(Icons.home),
         title: ("Home"),
         activeColorPrimary: AppColors.blue,
         inactiveColorPrimary: AppColors.grey,
       ),
       PersistentBottomNavBarItem(
-        icon:const Icon(Icons.favorite),
+        icon: const Icon(Icons.favorite),
         title: ("Favorite"),
         activeColorPrimary: AppColors.blue,
         inactiveColorPrimary: AppColors.grey,
@@ -40,17 +40,17 @@ class CustomBottomBar extends StatelessWidget {
     return Scaffold(
         appBar: AppBar(
           actions: [
-             InkWell(
+            InkWell(
                 onTap: () {
                   Navigator.of(context, rootNavigator: true).push(
                       MaterialPageRoute(builder: (context) => SearchPage()));
                 },
                 child: Icon(Icons.search)),
-           const  SizedBox(
+            const SizedBox(
               width: 6,
             ),
-           const Icon(Icons.notifications),
-           const SizedBox(
+            const Icon(Icons.notifications),
+            const SizedBox(
               width: 6,
             ),
           ],
@@ -81,7 +81,6 @@ class CustomBottomBar extends StatelessWidget {
             ],
           ),
         ),
-
         body: PersistentTabView(
           context,
           controller: _controller,

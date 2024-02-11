@@ -24,6 +24,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
+    
     late int removedIndex;
     return SingleChildScrollView(
       child: Padding(
@@ -34,13 +35,10 @@ class _FavoritePageState extends State<FavoritePage> {
               height: 50,
               width: 350,
               child: TextField(
-                onTap: () {
-                  filteredProductBefore = filteredProducts;
-                },
                 onChanged: (value) {
                   setState(() {
                     if (value.isEmpty) {
-                      filteredProducts = filteredProductBefore;
+                      filteredProducts = favProduct;
                     } else {
                       filteredProducts = filteredProducts
                           .where((product) => product.productName
@@ -68,13 +66,16 @@ class _FavoritePageState extends State<FavoritePage> {
                     return InkWell(
                       onTap: () {
                         setState(() {
+                          //check if no category check or a different category chose
                           if (selected == -1 ||
                               selected !=
                                   int.parse(
                                       dummy_categories[index].categoryId)) {
                             selected =
                                 int.parse(dummy_categories[index].categoryId);
-                          } else if (selected ==
+                          }
+                          //check it the same category choose
+                          else if (selected ==
                               int.parse(dummy_categories[index].categoryId)) {
                             selected = -1;
                           }
@@ -174,21 +175,22 @@ class _FavoritePageState extends State<FavoritePage> {
                                 onTap: () {
                                   //unfavorite any item
                                   setState(() {
-                                    if (filteredProducts[index].isFav == true) {
+                                    if (filteredProducts[index].isFav) {
                                       filteredProducts[index] =
                                           filteredProducts[index]
                                               .copyWith(isFav: false);
+                                      //update global list
+                                      removedIndex = dummy_product.indexWhere(
+                                          (product) =>
+                                              product.productId ==
+                                              filteredProducts[index]
+                                                  .productId);
+                                      dummy_product[removedIndex] =
+                                          dummy_product[removedIndex]
+                                              .copyWith(isFav: false);
+                                      favProduct
+                                          .remove(filteredProducts[index]);
                                     }
-                                    //update global list
-                                    removedIndex = dummy_product.indexWhere(
-                                        (product) =>
-                                            product.productId ==
-                                            filteredProducts[index].productId);
-                                    dummy_product[removedIndex] =
-                                        dummy_product[removedIndex]
-                                            .copyWith(isFav: false);
-
-                                    favProduct.remove(filteredProducts[index]);
                                   });
                                 },
                                 child: DecoratedBox(
@@ -196,7 +198,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                       color: AppColors.bgColor,
                                       borderRadius: BorderRadius.circular(10)),
                                   child: Icon(
-                                    filteredProducts[index].isFav == true
+                                    filteredProducts[index].isFav
                                         ? Icons.favorite
                                         : Icons.favorite_outline,
                                     color: AppColors.orange,
