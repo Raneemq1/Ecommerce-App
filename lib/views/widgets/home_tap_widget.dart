@@ -92,12 +92,18 @@ class _HomeTapState extends State<HomeTap> {
                               if (dummy_product[index].isFav == true) {
                                 updatedProduct =
                                     dummy_product[index].copyWith(isFav: false);
+                                dummy_product[index] = updatedProduct;
                               } else {
                                 updatedProduct =
                                     dummy_product[index].copyWith(isFav: true);
                               }
                               setState(() {
                                 dummy_product[index] = updatedProduct;
+                                if (updatedProduct.isFav) {
+                                  favProduct.add(updatedProduct);
+                                }else{
+                                  favProduct.removeWhere((product) =>product.productId==updatedProduct.productId );
+                                }
                               });
                             },
                             child: DecoratedBox(

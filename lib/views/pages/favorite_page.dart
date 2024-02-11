@@ -19,9 +19,7 @@ class _FavoritePageState extends State<FavoritePage> {
   @override
   void initState() {
     super.initState();
-    filteredProducts = dummy_product.where((product) {
-      return product.isFav == true;
-    }).toList();
+    filteredProducts = favProduct;
   }
 
   @override
@@ -82,20 +80,17 @@ class _FavoritePageState extends State<FavoritePage> {
                           }
 
                           //to put a favorite products from certain category
-                          filteredProducts = dummy_product.where((product) {
-                            return product.isFav == true &&
-                                dummy_categories[index].categoryName ==
-                                    dummy_categories[int.parse(
-                                                product.productCategoryId) -
+                          filteredProducts = favProduct.where((product) {
+                            return dummy_categories[index].categoryName ==
+                                dummy_categories[
+                                        int.parse(product.productCategoryId) -
                                             1]
-                                        .categoryName;
+                                    .categoryName;
                           }).toList();
 
                           if (selected == -1) {
                             //to put a favorite products with no constrains on category name
-                            filteredProducts = dummy_product.where((product) {
-                              return product.isFav == true;
-                            }).toList();
+                            filteredProducts = favProduct;
                           }
                         });
                       },
@@ -131,10 +126,8 @@ class _FavoritePageState extends State<FavoritePage> {
                 //note: expanded inside col within singleScroll child view
                 ? const SizedBox(
                     height: 350,
-                    child: Expanded(
-                      child: Center(
-                        child: Text('no favorite products yet'),
-                      ),
+                    child: Center(
+                      child: Text('no favorite products yet'),
                     ),
                   )
                 : GridView.builder(
@@ -186,21 +179,16 @@ class _FavoritePageState extends State<FavoritePage> {
                                           filteredProducts[index]
                                               .copyWith(isFav: false);
                                     }
-                                    //update global dummy list
+                                    //update global list
                                     removedIndex = dummy_product.indexWhere(
                                         (product) =>
-                                            product.productName ==
-                                            filteredProducts[index]
-                                                .productName);
-                                    if (removedIndex != -1) {
-                                      dummy_product[removedIndex] =
-                                          dummy_product[removedIndex].copyWith(
-                                        isFav: false,
-                                      );
-                                    }
-                                    //remove from filtered list
-                                    filteredProducts
-                                        .remove(filteredProducts[index]);
+                                            product.productId ==
+                                            filteredProducts[index].productId);
+                                    dummy_product[removedIndex] =
+                                        dummy_product[removedIndex]
+                                            .copyWith(isFav: false);
+
+                                    favProduct.remove(filteredProducts[index]);
                                   });
                                 },
                                 child: DecoratedBox(

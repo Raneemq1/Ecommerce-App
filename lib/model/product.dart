@@ -153,3 +153,5 @@ List<Product> dummy_product = [
     productCategoryId: dummy_categories[3].categoryId,
   ),
 ];
+
+List<Product> favProduct=[];
