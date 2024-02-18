@@ -6,7 +6,7 @@ import 'package:flutter/material.dart';
 
 class ProductDetails extends StatefulWidget {
   Product product;
-  ProductDetails({required this.product});
+  ProductDetails({super.key, required this.product});
 
   @override
   State<ProductDetails> createState() => _ProductDetailsState();
@@ -35,7 +35,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             Padding(
               padding: const EdgeInsets.only(top: 300),
               child: Container(
-                padding: EdgeInsets.all(30),
+                padding:const EdgeInsets.all(30),
                 width: double.infinity,
                 decoration: const BoxDecoration(
                     color: AppColors.bgColor,
@@ -52,13 +52,13 @@ class _ProductDetailsState extends State<ProductDetails> {
                           .bodyMedium!
                           .copyWith(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                    SizedBox(
+                   const  SizedBox(
                       height: 5,
                     ),
                     Row(
                       mainAxisAlignment: MainAxisAlignment.spaceBetween,
                       children: [
-                        Row(
+                        const Row(
                           children: [
                             Icon(
                               Icons.star,
@@ -74,7 +74,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Counter(),
                       ],
                     ),
-                    SizedBox(
+                   const SizedBox(
                       height: 15,
                     ),
                     Text(
@@ -84,7 +84,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             fontWeight: FontWeight.bold,
                           ),
                     ),
-                    SizedBox(
+                    const SizedBox(
                       height: 10,
                     ),
                     Container(
@@ -133,7 +133,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             );
                           }),
                     ),
-                    SizedBox(
+                   const SizedBox(
                       height: 20,
                     ),
                     Text('Description',
@@ -141,7 +141,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             )),
-                    SizedBox(
+                   const SizedBox(
                       height: 8,
                     ),
                     Text(widget.product.productDescribtion),
@@ -160,17 +160,17 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                           ),
                           ElevatedButton(
-                              style: ButtonStyle(
+                              style:const ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(
                                       AppColors.orange)),
                               onPressed: () {},
                               child: Row(
                                 children: [
-                                  Icon(
+                                 const Icon(
                                     Icons.shop_2,
                                     color: AppColors.white,
                                   ),
-                                  SizedBox(
+                                 const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
