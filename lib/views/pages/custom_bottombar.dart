@@ -1,6 +1,7 @@
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/views/pages/favorite_page.dart';
 import 'package:ecommerce_app/views/pages/home_page.dart';
+import 'package:ecommerce_app/views/pages/profile_page.dart';
 import 'package:ecommerce_app/views/pages/search_page.dart';
 import 'package:flutter/material.dart';
 import 'package:persistent_bottom_nav_bar/persistent_tab_view.dart';
@@ -17,6 +18,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     return [
       const HomePage(),
       const FavoritePage(),
+      const ProfilePage(),
     ];
   }
 
@@ -31,6 +33,12 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
       PersistentBottomNavBarItem(
         icon: const Icon(Icons.favorite),
         title: ("Favorite"),
+        activeColorPrimary: AppColors.blue,
+        inactiveColorPrimary: AppColors.grey,
+      ),
+       PersistentBottomNavBarItem(
+        icon: const Icon(Icons.person),
+        title: ("Profile"),
         activeColorPrimary: AppColors.blue,
         inactiveColorPrimary: AppColors.grey,
       ),
