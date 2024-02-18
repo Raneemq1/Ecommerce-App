@@ -1,6 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
-import 'package:ecommerce_app/viewmodel/cubit/categories_cubit.dart';
-import 'package:ecommerce_app/viewmodel/cubit/categories_state.dart';
+import 'package:ecommerce_app/viewmodel/cubit/categories/categories_cubit.dart';
+import 'package:ecommerce_app/viewmodel/cubit/categories/categories_state.dart';
 import 'package:ecommerce_app/model/category.dart';
 import 'package:ecommerce_app/model/product.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';

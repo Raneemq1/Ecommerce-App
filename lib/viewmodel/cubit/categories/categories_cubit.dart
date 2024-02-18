@@ -1,4 +1,4 @@
-import 'package:ecommerce_app/viewmodel/cubit/categories_state.dart';
+import 'package:ecommerce_app/viewmodel/cubit/categories/categories_state.dart';
 import 'package:ecommerce_app/model/category.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
