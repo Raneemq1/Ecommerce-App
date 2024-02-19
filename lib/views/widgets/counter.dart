@@ -1,28 +1,17 @@
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
-class Counter extends StatefulWidget {
-  Counter({super.key});
-
-  @override
-  State<Counter> createState() => _CounterState();
-}
-
-class _CounterState extends State<Counter> {
-  int counter = 0;
+class Counter extends StatelessWidget {
+  final dynamic cubit;
+  final int counter;
+  const Counter({super.key, required this.cubit, required this.counter});
 
   @override
   Widget build(BuildContext context) {
     return Row(
       children: [
         InkWell(
-          onTap: () {
-            setState(() {
-              if (counter != 0) {
-                counter--;
-              }
-            });
-          },
+          onTap: () async => await cubit.decremant(),
           child: DecoratedBox(
             decoration: BoxDecoration(
               color: AppColors.grey.withOpacity(0.1),
@@ -51,9 +40,7 @@ class _CounterState extends State<Counter> {
         ),
         InkWell(
           onTap: () {
-            setState(() {
-              counter++;
-            });
+            cubit.incremant();
           },
           child: DecoratedBox(
             decoration: BoxDecoration(
