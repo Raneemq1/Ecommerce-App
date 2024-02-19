@@ -9,7 +9,7 @@ class HomeCubit extends Cubit<HomeStatus> {
     emit(HomeLoading());
     try {
       await Future.delayed(const Duration(seconds: 2));
-      emit(HomeLoaded(dummy_product));
+      emit(HomeLoaded(dummy_product, favProduct));
     } catch (e) {
       emit(HomeError(errorMsg: e.toString()));
     }
@@ -22,10 +22,10 @@ class HomeCubit extends Cubit<HomeStatus> {
     } else {
       //search for a product to delete it
 
-      favProduct
-          .removeWhere((product) => product.productId == newProduct.productId);
+      favProduct.removeWhere(
+          (product) => product.productName == newProduct.productName);
     }
     dummy_product[index] = newProduct;
-    emit(HomeLoaded(dummy_product));
+    emit(HomeLoaded(dummy_product, favProduct));
   }
 }

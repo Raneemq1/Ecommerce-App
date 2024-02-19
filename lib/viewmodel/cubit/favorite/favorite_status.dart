@@ -3,7 +3,9 @@ import 'package:ecommerce_app/model/product.dart';
 
 class FavoriteStatus {}
 
-class FavoriteInitial extends FavoriteStatus {}
+class FavoriteInitial extends FavoriteStatus {
+
+}
 
 class FavoriteLoading extends FavoriteStatus {}
 
@@ -12,7 +14,7 @@ class FavoriteLoaded extends FavoriteStatus {
   List<Product> favProducts;
   List<Category> dummyCategorites;
 
-  FavoriteLoaded(this.dummyProducts,this.favProducts,this.dummyCategorites);
+  FavoriteLoaded(this.dummyProducts, this.favProducts, this.dummyCategorites);
 }
 
 class FavoriteError extends FavoriteStatus {

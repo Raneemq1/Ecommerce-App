@@ -110,8 +110,7 @@ class HomeTap extends StatelessWidget {
                                       final cubit = context.read<HomeCubit>();
                                       cubit.changeFavoriteStatus(
                                           dummyProducts[index], index);
-                                      debugPrint(
-                                          'Raneem check ${dummyProducts[index].isFav}');
+                                      debugPrint(favProduct.length.toString());
                                     },
                                     child: DecoratedBox(
                                       decoration: BoxDecoration(

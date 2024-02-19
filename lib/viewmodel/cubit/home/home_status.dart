@@ -8,9 +8,9 @@ class HomeLoading extends HomeStatus {}
 
 class HomeLoaded extends HomeStatus {
   List<Product> dummyProducts;
-  //List<Product> favProducts;
+  List<Product> favProducts;
 
-  HomeLoaded(this.dummyProducts);
+  HomeLoaded(this.dummyProducts, this.favProducts);
 }
 
 class HomeError extends HomeStatus {
