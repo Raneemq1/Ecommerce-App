@@ -20,7 +20,10 @@ class HomeCubit extends Cubit<HomeStatus> {
     if (newProduct.isFav) {
       favProduct.add(newProduct);
     } else {
-      favProduct.remove(newProduct);
+      //search for a product to delete it
+
+      favProduct
+          .removeWhere((product) => product.productId == newProduct.productId);
     }
     dummy_product[index] = newProduct;
     emit(HomeLoaded(dummy_product));

@@ -8,6 +8,7 @@ class HomeLoading extends HomeStatus {}
 
 class HomeLoaded extends HomeStatus {
   List<Product> dummyProducts;
+  //List<Product> favProducts;
 
   HomeLoaded(this.dummyProducts);
 }
@@ -16,10 +17,4 @@ class HomeError extends HomeStatus {
   final String errorMsg;
 
   HomeError({required this.errorMsg});
-}
-
-class UpdateFavorite extends HomeStatus {
-  List<Product> favProducts;
-  List<Product> dummyProducts;
-  UpdateFavorite(this.favProducts, this.dummyProducts);
 }
