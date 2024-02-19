@@ -1,4 +1,5 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/model/cart.dart';
 import 'package:ecommerce_app/model/product.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/views/widgets/counter.dart';
@@ -35,7 +36,7 @@ class _ProductDetailsState extends State<ProductDetails> {
             Padding(
               padding: const EdgeInsets.only(top: 300),
               child: Container(
-                padding:const EdgeInsets.all(30),
+                padding: const EdgeInsets.all(30),
                 width: double.infinity,
                 decoration: const BoxDecoration(
                     color: AppColors.bgColor,
@@ -52,7 +53,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                           .bodyMedium!
                           .copyWith(fontSize: 18, fontWeight: FontWeight.bold),
                     ),
-                   const  SizedBox(
+                    const SizedBox(
                       height: 5,
                     ),
                     Row(
@@ -74,7 +75,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                         Counter(),
                       ],
                     ),
-                   const SizedBox(
+                    const SizedBox(
                       height: 15,
                     ),
                     Text(
@@ -133,7 +134,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                             );
                           }),
                     ),
-                   const SizedBox(
+                    const SizedBox(
                       height: 20,
                     ),
                     Text('Description',
@@ -141,7 +142,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                               fontSize: 18,
                               fontWeight: FontWeight.bold,
                             )),
-                   const SizedBox(
+                    const SizedBox(
                       height: 8,
                     ),
                     Text(widget.product.productDescribtion),
@@ -160,17 +161,20 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                           ),
                           ElevatedButton(
-                              style:const ButtonStyle(
+                              style: const ButtonStyle(
                                   backgroundColor: MaterialStatePropertyAll(
                                       AppColors.orange)),
-                              onPressed: () {},
+                              onPressed: () {
+                                DateTime date = DateTime.now();
+                        
+                              },
                               child: Row(
                                 children: [
-                                 const Icon(
+                                  const Icon(
                                     Icons.shop_2,
                                     color: AppColors.white,
                                   ),
-                                 const SizedBox(
+                                  const SizedBox(
                                     width: 10,
                                   ),
                                   Text(
