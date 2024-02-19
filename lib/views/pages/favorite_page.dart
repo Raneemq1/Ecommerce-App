@@ -27,7 +27,7 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-    late int removedIndex;
+
     return BlocProvider(
       create: (context) {
         final cubit = FavoriteCubit();
@@ -42,7 +42,6 @@ class _FavoritePageState extends State<FavoritePage> {
         builder: (context, state) {
           if (state is FavoriteLoaded) {
             final dummyCat = state.dummyCategorites;
-            final dummyProduct = state.dummyProducts;
             final favProducts = state.favProducts;
 
             return SingleChildScrollView(
@@ -81,7 +80,7 @@ class _FavoritePageState extends State<FavoritePage> {
                       height: 60,
                       child: ListView.builder(
                           scrollDirection: Axis.horizontal,
-                          itemCount: dummy_categories.length,
+                          itemCount: dummyCat.length,
                           itemBuilder: (context, index) {
                             return InkWell(
                               onTap: () {
@@ -89,24 +88,24 @@ class _FavoritePageState extends State<FavoritePage> {
                                   //check if no category check or a different category chose
                                   if (selected == -1 ||
                                       selected !=
-                                          int.parse(dummy_categories[index]
+                                          int.parse(dummyCat[index]
                                               .categoryId)) {
                                     selected = int.parse(
-                                        dummy_categories[index].categoryId);
+                                        dummyCat[index].categoryId);
                                   }
                                   //check it the same category choose
                                   else if (selected ==
                                       int.parse(
-                                          dummy_categories[index].categoryId)) {
+                                          dummyCat[index].categoryId)) {
                                     selected = -1;
                                   }
 
                                   //to put a favorite products from certain category
                                   filteredProducts =
                                       favProducts.where((product) {
-                                    return dummy_categories[index]
+                                    return dummyCat[index]
                                             .categoryName ==
-                                        dummy_categories[int.parse(
+                                        dummyCat[int.parse(
                                                     product.productCategoryId) -
                                                 1]
                                             .categoryName;
@@ -122,20 +121,20 @@ class _FavoritePageState extends State<FavoritePage> {
                                 width: 100,
                                 child: Card(
                                   color: selected ==
-                                          int.parse(dummy_categories[index]
+                                          int.parse(dummyCat[index]
                                               .categoryId)
                                       ? AppColors.orange
                                       : AppColors.bgColor,
                                   child: Center(
                                       child: Text(
-                                    dummy_categories[index].categoryName,
+                                    dummyCat[index].categoryName,
                                     style: Theme.of(context)
                                         .textTheme
                                         .bodyMedium!
                                         .copyWith(
                                             color: selected ==
                                                     int.parse(
-                                                        dummy_categories[index]
+                                                        dummyCat[index]
                                                             .categoryId)
                                                 ? AppColors.white
                                                 : AppColors.black),
@@ -237,7 +236,7 @@ class _FavoritePageState extends State<FavoritePage> {
               ),
             );
           } else if (state is FavoriteLoading) {
-            return Center(
+            return const Center(
               child: CircularProgressIndicator.adaptive(),
             );
           } else {

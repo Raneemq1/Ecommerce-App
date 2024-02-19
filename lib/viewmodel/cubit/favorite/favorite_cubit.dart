@@ -11,7 +11,7 @@ class FavoriteCubit extends Cubit<FavoriteStatus> {
     emit(FavoriteLoading());
     try {
       await Future.delayed(const Duration(seconds: 2));
-      emit(FavoriteLoaded(dummy_product, favProduct, dummy_categories));
+      emit(FavoriteLoaded(favProduct, dummy_categories));
     } catch (e) {
       emit(FavoriteError(errorMsg: e.toString()));
     }
@@ -26,6 +26,6 @@ class FavoriteCubit extends Cubit<FavoriteStatus> {
     int index = dummy_product
         .indexWhere((product) => product.productName == newProduct.productName);
     dummy_product[index] = dummy_product[index].copyWith(isFav: false);
-    emit(FavoriteLoaded(dummy_product, favProduct, dummy_categories));
+    emit(FavoriteLoaded( favProduct, dummy_categories));
   }
 }
