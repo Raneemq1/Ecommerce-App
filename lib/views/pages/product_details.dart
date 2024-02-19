@@ -17,6 +17,8 @@ class ProductDetails extends StatefulWidget {
 class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
+    bool switctValue = true;
+    
     return Scaffold(
         extendBodyBehindAppBar: true,
         appBar: AppBar(
@@ -115,7 +117,7 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 child: CircleAvatar(
                                     backgroundColor: widget.product.size ==
                                             ProductSize.values[index]
-                                        ? AppColors.grey
+                                        ? AppColors.orange
                                         : AppColors.grey.withOpacity(0.4),
                                     radius: 20,
                                     child: Text(
@@ -162,20 +164,59 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     ),
                           ),
                           ElevatedButton(
-                              style: const ButtonStyle(
-                                  backgroundColor: MaterialStatePropertyAll(
-                                      AppColors.orange)),
+                              style: ButtonStyle(
+                                  backgroundColor:
+                                      MaterialStateProperty.resolveWith<Color>(
+                                (states) => switctValue
+                                    ? AppColors.orange
+                                    : AppColors.grey,
+                              )),
                               onPressed: () {
-                                String id = const Uuid().v1();
-                                double quantity = 5;
-                                final cart = Cart(
-                                    id: id,
-                                    shoppingItem: widget.product,
-                                    quantity: 2,
-                                    totalPrice:
-                                        widget.product.productPrice * quantity,
-                                    status: 'Pending');
-                                shoppingCart.add(cart);
+                                if (switctValue) {
+                                  String id = const Uuid().v1();
+                                  double quantity = 5;
+                                  final cart = Cart(
+                                      id: id,
+                                      shoppingItem: widget.product,
+                                      quantity: 2,
+                                      totalPrice: widget.product.productPrice *
+                                          quantity,
+                                      status: 'Pending');
+                                  shoppingCart.add(cart);
+                                  showDialog(
+                                    context: context,
+                                    builder: (context) => AlertDialog(
+                                      title: Text('Add to cart'),
+                                      content:
+                                          Text('Added sucessfully to the cart'),
+                                      actions: [
+                                        TextButton(
+                                          onPressed: () {
+                                            // Close the AlertDialog
+                                            Navigator.of(context).pop();
+                                          },
+                                          child: const Text('Close'),
+                                        ),
+                                      ],
+                                    ),
+                                  );
+                                  switctValue = false;
+                                } else {
+                                  showDialog(
+                                      context: context,
+                                      builder: (context) => AlertDialog(
+                                            title: const Text('Retry'),
+                                            content: const Text(
+                                                'This added before to the cart'),
+                                            actions: [
+                                              TextButton(
+                                                  onPressed: () {
+                                                    Navigator.pop(context);
+                                                  },
+                                                  child: Text('close'))
+                                            ],
+                                          ));
+                                }
                               },
                               child: Row(
                                 children: [
