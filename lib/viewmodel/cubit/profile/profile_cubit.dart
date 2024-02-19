@@ -14,4 +14,8 @@ class PorfileCubit extends Cubit<ProfileStatus> {
       emit(ProfileError(errorMsg: e.toString()));
     }
   }
+
+  void switchMode(bool value) {
+    emit(SwitchProfileMode(value));
+  }
 }

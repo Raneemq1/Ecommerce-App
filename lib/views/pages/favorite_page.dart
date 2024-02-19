@@ -27,7 +27,6 @@ class _FavoritePageState extends State<FavoritePage> {
 
   @override
   Widget build(BuildContext context) {
-
     return BlocProvider(
       create: (context) {
         final cubit = FavoriteCubit();
@@ -53,7 +52,7 @@ class _FavoritePageState extends State<FavoritePage> {
                       height: 50,
                       width: 350,
                       child: TextField(
-                        //text firld must be in statefull
+                        //text field must be in statefull
                         onChanged: (value) {
                           setState(() {
                             if (value.isEmpty) {
@@ -88,23 +87,21 @@ class _FavoritePageState extends State<FavoritePage> {
                                   //check if no category check or a different category chose
                                   if (selected == -1 ||
                                       selected !=
-                                          int.parse(dummyCat[index]
-                                              .categoryId)) {
-                                    selected = int.parse(
-                                        dummyCat[index].categoryId);
+                                          int.parse(
+                                              dummyCat[index].categoryId)) {
+                                    selected =
+                                        int.parse(dummyCat[index].categoryId);
                                   }
                                   //check it the same category choose
                                   else if (selected ==
-                                      int.parse(
-                                          dummyCat[index].categoryId)) {
+                                      int.parse(dummyCat[index].categoryId)) {
                                     selected = -1;
                                   }
 
                                   //to put a favorite products from certain category
                                   filteredProducts =
                                       favProducts.where((product) {
-                                    return dummyCat[index]
-                                            .categoryName ==
+                                    return dummyCat[index].categoryName ==
                                         dummyCat[int.parse(
                                                     product.productCategoryId) -
                                                 1]
@@ -121,8 +118,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                 width: 100,
                                 child: Card(
                                   color: selected ==
-                                          int.parse(dummyCat[index]
-                                              .categoryId)
+                                          int.parse(dummyCat[index].categoryId)
                                       ? AppColors.orange
                                       : AppColors.bgColor,
                                   child: Center(
@@ -133,9 +129,8 @@ class _FavoritePageState extends State<FavoritePage> {
                                         .bodyMedium!
                                         .copyWith(
                                             color: selected ==
-                                                    int.parse(
-                                                        dummyCat[index]
-                                                            .categoryId)
+                                                    int.parse(dummyCat[index]
+                                                        .categoryId)
                                                 ? AppColors.white
                                                 : AppColors.black),
                                   )),

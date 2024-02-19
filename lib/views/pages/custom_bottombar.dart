@@ -1,4 +1,6 @@
+import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
+import 'package:ecommerce_app/views/pages/cart_page.dart';
 import 'package:ecommerce_app/views/pages/favorite_page.dart';
 import 'package:ecommerce_app/views/pages/home_page.dart';
 import 'package:ecommerce_app/views/pages/profile_page.dart';
@@ -18,6 +20,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
     return [
       const HomePage(),
       const FavoritePage(),
+      const CartPage(),
       const ProfilePage(),
     ];
   }
@@ -36,7 +39,13 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         activeColorPrimary: AppColors.blue,
         inactiveColorPrimary: AppColors.grey,
       ),
-       PersistentBottomNavBarItem(
+      (PersistentBottomNavBarItem(
+        icon: const Icon(Icons.shopping_basket),
+        title: ("Cart"),
+        activeColorPrimary: AppColors.blue,
+        inactiveColorPrimary: AppColors.grey,
+      )),
+      PersistentBottomNavBarItem(
         icon: const Icon(Icons.person),
         title: ("Profile"),
         activeColorPrimary: AppColors.blue,
@@ -59,7 +68,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
                   Navigator.of(context, rootNavigator: true).push(
                       MaterialPageRoute(builder: (context) => SearchPage()));
                 },
-                child: Icon(Icons.search)),
+                child: const Icon(Icons.search)),
             const SizedBox(
               width: 6,
             ),
@@ -72,7 +81,7 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
             padding: EdgeInsets.all(4.0),
             child: CircleAvatar(
               radius: 10,
-              backgroundImage: NetworkImage(
+              backgroundImage: CachedNetworkImageProvider(
                   'https://www.indiewire.com/wp-content/uploads/2019/03/151442_6876.jpg'),
             ),
           ),
@@ -106,7 +115,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
           handleAndroidBackButtonPress: true, // Default is true.
           resizeToAvoidBottomInset:
               true, // This needs to be true if you want to move up the screen when keyboard appears. Default is true.
-          stateManagement: false, // put it false to prevent saving scroll position
+          stateManagement:
+              false, // put it false to prevent saving scroll position
           hideNavigationBarWhenKeyboardShows:
               true, // Recommended to set 'resizeToAvoidBottomInset' as true while using this argument. Default is true.
           decoration: NavBarDecoration(

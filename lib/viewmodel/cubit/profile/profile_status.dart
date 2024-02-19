@@ -17,3 +17,9 @@ class ProfileError extends ProfileStatus {
 
   ProfileError({required this.errorMsg});
 }
+
+class SwitchProfileMode extends ProfileStatus {
+  bool switchValue;
+
+  SwitchProfileMode(this.switchValue);
+}
