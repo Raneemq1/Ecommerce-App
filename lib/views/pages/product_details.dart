@@ -201,15 +201,36 @@ class _ProductDetailsState extends State<ProductDetails> {
                                 mainAxisAlignment:
                                     MainAxisAlignment.spaceBetween,
                                 children: [
-                                  Text(
-                                    '${widget.product.productPrice}\$',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(
-                                          fontWeight: FontWeight.bold,
-                                          fontSize: 20,
-                                        ),
+                                  BlocBuilder<ProductDetailsCubit,
+                                      ProductDetailsStatus>(
+                                    bloc: cubit,
+                                    buildWhen: (previous, current) =>
+                                        current is QuantityChanged,
+                                    builder: (context, state) {
+                                      if (state is QuantityChanged) {
+                                        return Text(
+                                          '${widget.product.productPrice * state.quantity}\$',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                        );
+                                      } else {
+                                        return Text(
+                                          '${widget.product.productPrice}\$',
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                fontWeight: FontWeight.bold,
+                                                fontSize: 20,
+                                              ),
+                                        );
+                                      }
+                                    },
                                   ),
                                   BlocBuilder<ProductDetailsCubit,
                                       ProductDetailsStatus>(
