@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/model/cart.dart';
+import 'package:uuid/uuid.dart';
 import 'package:ecommerce_app/model/product.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/views/widgets/counter.dart';
@@ -165,8 +166,16 @@ class _ProductDetailsState extends State<ProductDetails> {
                                   backgroundColor: MaterialStatePropertyAll(
                                       AppColors.orange)),
                               onPressed: () {
-                                DateTime date = DateTime.now();
-                        
+                                String id = const Uuid().v1();
+                                double quantity = 5;
+                                final cart = Cart(
+                                    id: id,
+                                    shoppingItem: widget.product,
+                                    quantity: 2,
+                                    totalPrice:
+                                        widget.product.productPrice * quantity,
+                                    status: 'Pending');
+                                shoppingCart.add(cart);
                               },
                               child: Row(
                                 children: [
