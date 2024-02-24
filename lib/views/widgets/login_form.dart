@@ -98,6 +98,7 @@ class _LoginFormState extends State<LoginForm> {
               builder: (context, state) {
                 if (state is AuthLoading) {
                   return MainButton(
+                    bgColor: AppColors.grey2,
                     onPressed: login,
                     child: CircularProgressIndicator.adaptive(),
                   );
