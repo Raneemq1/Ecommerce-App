@@ -2,6 +2,7 @@ import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/viewmodel/cubit/auth/auth_cubit.dart';
 import 'package:ecommerce_app/viewmodel/cubit/auth/auth_state.dart';
 import 'package:ecommerce_app/views/pages/custom_bottombar.dart';
+import 'package:ecommerce_app/views/pages/register_page.dart';
 import 'package:ecommerce_app/views/widgets/main_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -120,7 +121,7 @@ class _LoginFormState extends State<LoginForm> {
             ),
             Center(
                 child: InkWell(
-              onTap: null, //signup
+              onTap:() => Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RegisterPage())), //signup
               child: Text(
                 'Create Account',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(
