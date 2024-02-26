@@ -19,22 +19,26 @@ class HomeCubit extends Cubit<HomeStatus> {
     }
   }
 
-  void changeFavoriteStatus(Product newProduct, int index) {
-    debugPrint('categories page1:${newProduct.productId}  1');
+  void changeFavoriteStatus(Product newProduct) async {
+    
     newProduct = newProduct.copyWith(isFav: !newProduct.isFav);
-     debugPrint('categories page1:${newProduct.productId}  2');
+   
     if (newProduct.isFav) {
       favProduct.add(newProduct);
     } else {
       //search for a product to delete it
-
+    debugPrint('homecubit: ${newProduct.productId}');
       favProduct.removeWhere(
           (product) => product.productName == newProduct.productName);
     }
+    debugPrint('homecubit:');
+debugPrint('homecubit: ${newProduct.productName}');
+    //update isFav
+    homeService.updateProduct(newProduct);
+   
 
-    //issue to solve it from firestore
-    //dummy_product[index] = newProduct;
-
-    emit(HomeLoaded(dummy_product, favProduct));
+    //get data after update 
+    final products = await homeService.getData();
+    emit(HomeLoaded(products, favProduct));
   }
 }

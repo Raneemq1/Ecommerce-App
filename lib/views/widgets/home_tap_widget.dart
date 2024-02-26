@@ -37,7 +37,7 @@ class HomeTap extends StatelessWidget {
                     padding: const EdgeInsets.all(30.0),
                     child: Column(
                       children: [
-                         CustomCarousel(),
+                         const CustomCarousel(),
                         const SizedBox(
                           height: 20,
                         ),
@@ -108,10 +108,12 @@ class HomeTap extends StatelessWidget {
                                       right: 0,
                                       child: InkWell(
                                         onTap: () {
+                                         //favorite and unfavoirte in home page 
+
                                           // Access the HomeCubit instance provided by BlocProvider
-                                          final cubit = context.read<HomeCubit>();
+                                         final cubit = BlocProvider.of<HomeCubit>(context);
                                           cubit.changeFavoriteStatus(
-                                              dummyProducts[index], index);
+                                              dummyProducts[index]);
                                           debugPrint(favProduct.length.toString());
                                         },
                                         child: DecoratedBox(

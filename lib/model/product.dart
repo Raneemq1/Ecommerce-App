@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 import 'category.dart';
 
 enum ProductSize {
@@ -37,7 +39,7 @@ class Product {
       ProductSize? size,
       String? productCategoryId}) {
     return Product(
-        productId: productId ?? this.productCategoryId,
+        productId: productId ?? this.productId,
         productName: productName ?? this.productName,
         productPrice: productPrice ?? this.productPrice,
         productImg: productImg ?? this.productImg,
@@ -60,14 +62,15 @@ class Product {
   }
 
   factory Product.fromMap(Map<String, dynamic> map, String id) {
+   
     return Product(
-        productId: id,
+        productId:  id,
         productName: map['productName'] ?? '',
         productPrice: map['productPrice'] ?? 0,
         productImg: map['productImg'] ?? '',
         productDescribtion: map['productDesc'] ?? '',
         isFav: map['isFav'] ?? false,
-        productCategoryId: map['productCategoryId'] ?? '');
+        productCategoryId: map['catId'] ?? '');
   }
 }
 
@@ -81,7 +84,7 @@ List<Product> dummy_product = [
     productImg:
         'https://parspng.com/wp-content/uploads/2022/07/Tshirtpng.parspng.com_.png',
     isFav: false,
-    productCategoryId: dummy_categories[1].categoryId,
+    productCategoryId: '2',
   ),
   Product(
     productId: '2',
@@ -91,7 +94,7 @@ List<Product> dummy_product = [
         'Sleek black shoes with durable soles, ideal for both formal and casual occasions.',
     productImg: 'https://pngimg.com/d/men_shoes_PNG7475.png',
     isFav: false,
-    productCategoryId: dummy_categories[2].categoryId,
+    productCategoryId:'3',
   ),
   Product(
     productId: '3',
@@ -102,7 +105,7 @@ List<Product> dummy_product = [
     productImg:
         'https://www.pngall.com/wp-content/uploads/2016/09/Trouser-Free-Download-PNG.png',
     isFav: false,
-    productCategoryId: dummy_categories[1].categoryId,
+    productCategoryId: '2',
   ),
   Product(
     productId: '4',
@@ -113,7 +116,7 @@ List<Product> dummy_product = [
     productImg:
         'https://parspng.com/wp-content/uploads/2022/12/tomatopng.parspng.com-6.png',
     isFav: false,
-    productCategoryId: dummy_categories[3].categoryId,
+    productCategoryId: '4',
   ),
   Product(
     productId: '5',
@@ -123,7 +126,7 @@ List<Product> dummy_product = [
         'Versatile and hearty potatoes, great for baking, frying, or making mashed potatoes.',
     productImg: 'https://pngimg.com/d/potato_png2398.png',
     isFav: false,
-    productCategoryId: dummy_categories[4].categoryId,
+    productCategoryId:'5',
   ),
   Product(
     productId: '6',
@@ -133,7 +136,7 @@ List<Product> dummy_product = [
         'Crisp and flavorful onions, an essential ingredient for a wide range of dishes.',
     productImg: 'https://pngimg.com/d/onion_PNG99213.png',
     isFav: false,
-    productCategoryId: dummy_categories[4].categoryId,
+    productCategoryId: '5',
   ),
   Product(
     productId: '7',
@@ -143,7 +146,7 @@ List<Product> dummy_product = [
         'Juicy and sweet apples, perfect for snacking or baking.',
     productImg: 'https://pngfre.com/wp-content/uploads/apple-43-1024x1015.png',
     isFav: false,
-    productCategoryId: dummy_categories[3].categoryId,
+    productCategoryId: '4',
   ),
   Product(
     productId: '8',
@@ -153,7 +156,7 @@ List<Product> dummy_product = [
     productImg:
         'https://www.usherbrand.com/cdn/shop/products/5uYjJeWpde9urtZyWKwFK4GHS6S3thwKRuYaMRph7bBDyqSZwZ_87x1mq24b2e7_1800x1800.png',
     isFav: false,
-    productCategoryId: dummy_categories[1].categoryId,
+    productCategoryId: '2',
   ),
   Product(
     productId: '9',
@@ -162,7 +165,7 @@ List<Product> dummy_product = [
     productDescribtion: 'Sweet and juicy mangoes, full of tropical flavor.',
     productImg: 'https://purepng.com/public/uploads/large/mango-tgy.png',
     isFav: false,
-    productCategoryId: dummy_categories[3].categoryId,
+    productCategoryId: '4',
   ),
   Product(
     productId: '10',
@@ -173,7 +176,7 @@ List<Product> dummy_product = [
     productImg:
         'https://static.vecteezy.com/system/resources/previews/015/100/096/original/bananas-transparent-background-free-png.png',
     isFav: false,
-    productCategoryId: dummy_categories[3].categoryId,
+    productCategoryId: '4',
   ),
 ];
 

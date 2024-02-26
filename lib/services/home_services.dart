@@ -4,6 +4,7 @@ import 'package:ecommerce_app/utils/api_paths.dart';
 
 abstract class HomeService {
   Future<List<Product>> getData();
+  void updateProduct(Product product);
 }
 
 class HomeServiceImp extends HomeService {
@@ -16,5 +17,11 @@ class HomeServiceImp extends HomeService {
         return Product.fromMap(data, documentId);
       },
     );
+  }
+
+  @override
+  void updateProduct(Product product) async {
+    await _firestoreService.setData(
+        path: ApiPaths.getProduct(product.productId), data: product.toMap());
   }
 }

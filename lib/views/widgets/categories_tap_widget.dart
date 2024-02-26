@@ -17,9 +17,11 @@ class CategoriesTap extends StatelessWidget {
       create: (context) => CategoriesCubit()..getData(),
       child: BlocBuilder<CategoriesCubit, CategoriesStatus>(
         builder: (context, state) {
-          debugPrint('categories page : $state.toString()');
           if (state is CategoriesLoaded) {
-            debugPrint('categories page:state.dummyCategories[0].categoryName');
+            final dummyProducts = state.dummyProducts;
+            debugPrint(
+                'categories page:${state.dummyCategories[0].categoryName}');
+
             return ListView.builder(
                 itemCount: state.dummyCategories.length,
                 shrinkWrap: true,
@@ -52,7 +54,7 @@ class CategoriesTap extends StatelessWidget {
                                     ),
                               ),
                               Text(
-                                  '${countProductsInCategory(state.dummyCategories[index].categoryName).toString()} Product'),
+                                  '${countProductsInCategory(state.dummyCategories[index].categoryName, dummyProducts, state.dummyCategories).toString()} Product'),
                             ],
                           )),
                     ]),
@@ -69,13 +71,14 @@ class CategoriesTap extends StatelessWidget {
   }
 }
 
-int countProductsInCategory(String categoryName) {
-  debugPrint('categories page: $categoryName here');
+int countProductsInCategory(String categoryName, List<Product> dummyProduct,
+    List<Category> dummyCategory) {
+  debugPrint('categories page: ${categoryName} here');
   int count = 0;
 
-  dummy_product.forEach((element) {
-    debugPrint('categories page: ${element.productId.length} ${categoryName}');
-    dummy_categories[int.parse(element.productCategoryId) - 1].categoryName ==
+  dummyProduct.forEach((element) {
+    
+    dummyCategory[int.parse(element.productCategoryId)-1].categoryName ==
             categoryName
         ? count++
         : 0;

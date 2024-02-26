@@ -8,18 +8,22 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 
 class PorfileCubit extends Cubit<ProfileStatus> {
   PorfileCubit() : super(ProfileInitial());
+
   final _userService = UserServiceImp();
   final _authService = AuthenticationServiceImpl();
+
   void getDatat() async {
     emit(ProfileLoading());
     try {
       final user = await _authService.currentUser();
+      debugPrint('profile cubit:${user?.email.toString()}');
       final users = await _userService.getData();
       final dummyUserData =
           users.firstWhere((element) => element.email == user?.email);
-      
-      emit(ProfileLoaded(user:dummyUserData));
+
+      emit(ProfileLoaded(user: dummyUserData));
     } catch (e) {
+      
       emit(ProfileError(errorMsg: e.toString()));
     }
   }

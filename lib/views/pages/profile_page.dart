@@ -29,6 +29,7 @@ class ProfilePage extends StatelessWidget {
               current is ProfileLoading ||
               current is ProfileError,
           builder: (context, state) {
+            debugPrint('profile cubit:${state.toString()}');
             if (state is ProfileLoading) {
               return const Center(
                 child: CircularProgressIndicator.adaptive(),
@@ -292,7 +293,8 @@ class ProfilePage extends StatelessWidget {
                                 if (state is AuthSuccess) {
                                   Navigator.of(context, rootNavigator: true)
                                       .push(MaterialPageRoute(
-                                          builder: (context) => const LoginPage()));
+                                          builder: (context) =>
+                                              const LoginPage()));
                                 }
                               },
                               builder: (context, state) {

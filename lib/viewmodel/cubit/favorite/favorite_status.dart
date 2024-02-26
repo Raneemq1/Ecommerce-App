@@ -10,8 +10,9 @@ class FavoriteLoading extends FavoriteStatus {}
 class FavoriteLoaded extends FavoriteStatus {
   List<Product> favProducts;
   List<Category> dummyCategorites;
+  List<Product> dummyProducts;
 
-  FavoriteLoaded(this.favProducts, this.dummyCategorites);
+  FavoriteLoaded(this.favProducts, this.dummyCategorites,this.dummyProducts);
 }
 
 class FavoriteError extends FavoriteStatus {
