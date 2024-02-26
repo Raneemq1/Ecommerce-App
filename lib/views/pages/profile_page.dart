@@ -1,7 +1,10 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
+import 'package:ecommerce_app/viewmodel/cubit/auth/auth_cubit.dart';
+import 'package:ecommerce_app/viewmodel/cubit/auth/auth_state.dart';
 import 'package:ecommerce_app/viewmodel/cubit/profile/profile_cubit.dart';
 import 'package:ecommerce_app/viewmodel/cubit/profile/profile_status.dart';
+import 'package:ecommerce_app/views/pages/login_page.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
@@ -10,6 +13,7 @@ class ProfilePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final authCubit = BlocProvider.of<AuthCubit>(context);
     final size = MediaQuery.of(context).size;
     return BlocProvider(
       create: (context) {
@@ -139,7 +143,6 @@ class ProfilePage extends StatelessWidget {
                               buildWhen: (previous, current) =>
                                   current is SwitchProfileMode,
                               builder: (context, state) {
-                               
                                 if (state is SwitchProfileMode) {
                                   bool value = state.switchValue;
                                   return Switch(
@@ -263,6 +266,46 @@ class ProfilePage extends StatelessWidget {
                           ],
                         ),
                       ),
+                      const Divider(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(horizontal: 30.0),
+                        child: Row(
+                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                          children: [
+                            Text(
+                              'Logout',
+                              style: Theme.of(context)
+                                  .textTheme
+                                  .bodyLarge!
+                                  .copyWith(
+                                    fontSize: 16,
+                                  ),
+                            ),
+                            BlocConsumer<AuthCubit, AuthState>(
+                              bloc: authCubit,
+                              listenWhen: (previous, current) =>
+                                  current is AuthSuccess,
+                              listener: (context, state) {
+                                if (state is AuthSuccess) {
+                                  Navigator.of(context, rootNavigator: true)
+                                      .push(MaterialPageRoute(
+                                          builder: (context) => const LoginPage()));
+                                }
+                              },
+                              builder: (context, state) {
+                                return InkWell(
+                                    onTap: () async {
+                                      await authCubit.logOut();
+                                    },
+                                    child: Icon(Icons.logout));
+                              },
+                            ),
+                          ],
+                        ),
+                      )
                     ],
                   ),
                 ),

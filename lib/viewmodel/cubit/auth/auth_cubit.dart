@@ -1,5 +1,7 @@
+import 'package:ecommerce_app/model/user.dart';
 import 'package:ecommerce_app/services/auth_service.dart';
 import 'package:ecommerce_app/viewmodel/cubit/auth/auth_state.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class AuthCubit extends Cubit<AuthState> {
@@ -33,6 +35,25 @@ class AuthCubit extends Cubit<AuthState> {
       }
     } catch (e) {
       emit(AuthFaliure(e.toString()));
+    }
+  }
+
+  Future<void> logOut() async {
+    await authService.signOut();
+    emit(AuthSuccess());
+  }
+
+  Future<void> getCurrentUser() async {
+    emit(AuthLoading());
+    try {
+      var user = await authService.currentUser();
+      if (user != null) {
+        emit(AuthSuccess());
+      } else {
+        emit(AuthInitial());
+      }
+    } catch (e) {
+      emit(AuthInitial());
     }
   }
 }

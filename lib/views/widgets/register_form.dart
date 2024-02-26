@@ -1,5 +1,7 @@
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/viewmodel/cubit/auth/auth_cubit.dart';
+import 'package:ecommerce_app/viewmodel/cubit/auth/auth_state.dart';
+import 'package:ecommerce_app/views/pages/custom_bottombar.dart';
 import 'package:ecommerce_app/views/pages/login_page.dart';
 import 'package:ecommerce_app/views/widgets/login_form.dart';
 import 'package:ecommerce_app/views/widgets/main_button.dart';
@@ -21,6 +23,43 @@ class _RegisterFormState extends State<RegisterForm> {
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
   bool _isVisible = false;
+
+  void signUp() {
+    final cubit = BlocProvider.of<AuthCubit>(context);
+
+    if (_globalKey.currentState!.validate()) {
+      cubit.signUpWithEmailAndPassword(
+          _emailController.text, _passwordController.text);
+    }
+  }
+
+  String? validEmail() {
+    RegExp emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+    if (emailRegex.hasMatch(_emailController.text)) {
+      return null;
+    } else {
+      return 'Please enter a valid email';
+    }
+  }
+
+  String? validPassword() {
+    //RegExp passRegex =
+        //RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    if (_passwordController.text.length>=6) {
+      return null;
+    } else {
+      return 'Please enter a valid password';
+    }
+  }
+
+  String? validInput(String input) {
+    if (input.isNotEmpty) {
+      return null;
+    } else {
+      return 'Please fill the information';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<AuthCubit>(context);
@@ -30,9 +69,9 @@ class _RegisterFormState extends State<RegisterForm> {
           children: [
             TextFormField(
               controller: _emailController,
-              validator: (value) {},
+              validator: (value) => validEmail(),
               decoration:
-                  InputDecoration(hintText: 'Enter Email', labelText: 'Email'),
+                  InputDecoration(hintText: 'Enter Email'),
             ),
             const SizedBox(
               height: 15,
@@ -40,10 +79,10 @@ class _RegisterFormState extends State<RegisterForm> {
             TextFormField(
                 controller: _passwordController,
                 obscureText: !_isVisible,
-                validator: (value) {},
+                validator: (value) => validPassword(),
                 decoration: InputDecoration(
                     hintText: 'Enter Password',
-                    labelText: 'Password',
+                    
                     suffixIcon: InkWell(
                         onTap: () {
                           setState(() {
@@ -58,31 +97,53 @@ class _RegisterFormState extends State<RegisterForm> {
             ),
             TextFormField(
                 controller: _nameController,
-                validator: (value) {},
+                validator: (value) => validInput(value!),
                 decoration:
-                    InputDecoration(hintText: 'Enter Name', labelText: 'Name')),
+                    InputDecoration(hintText: 'Enter Name')),
             const SizedBox(
               height: 15,
             ),
             TextFormField(
                 controller: _addressController,
-                validator: (value) {},
+                validator: (value) => validInput(value!),
                 decoration: InputDecoration(
-                    hintText: 'Enter Address', labelText: 'Address')),
+                    hintText: 'Enter Address')),
             const SizedBox(
               height: 15,
             ),
             TextFormField(
                 controller: _phoneController,
-                validator: (value) {},
+                validator: (value) => validInput(value!),
                 decoration: InputDecoration(
-                    hintText: 'Enter Phone', labelText: 'Phone')),
+                    hintText: 'Enter Phone')),
             const SizedBox(
               height: 40,
             ),
-            MainButton(
-              title: 'Sign Up',
-              onPressed: () {},
+            BlocConsumer<AuthCubit, AuthState>(
+              bloc: cubit,
+              listenWhen: (previous, current) =>
+                  current is AuthSuccess || current is AuthFaliure,
+              buildWhen: (previous, current) =>
+                  current is AuthLoading ||
+                  current is AuthFaliure ||
+                  current is AuthSuccess,
+              builder: (context, state) {
+                if (state is AuthLoading) {
+                  return MainButton(
+                    child: CircularProgressIndicator.adaptive(),
+                  );
+                }
+                return MainButton(
+                  title: 'Sign Up',
+                  onPressed:signUp,
+                );
+              },
+              listener: (context, state) {
+                if (state is AuthSuccess) {
+                  Navigator.of(context).push(
+                      MaterialPageRoute(builder: (_) => CustomBottomBar()));
+                } else if (state is AuthFaliure) {}
+              },
             ),
             const SizedBox(
               height: 10,
@@ -90,9 +151,13 @@ class _RegisterFormState extends State<RegisterForm> {
             InkWell(
               onTap: () => Navigator.of(context)
                   .push(MaterialPageRoute(builder: (_) => LoginPage())),
-              child: Center(child: Text('Login',style: Theme.of(context).textTheme.bodyLarge!.copyWith(
-                color: AppColors.grey,
-              ),)),
+              child: Center(
+                  child: Text(
+                'Login',
+                style: Theme.of(context).textTheme.bodyLarge!.copyWith(
+                      color: AppColors.grey,
+                    ),
+              )),
             )
           ],
         ));

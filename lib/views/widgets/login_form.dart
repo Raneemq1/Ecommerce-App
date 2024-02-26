@@ -22,9 +22,29 @@ class _LoginFormState extends State<LoginForm> {
 
   Future<void> login() async {
     final cubit = BlocProvider.of<AuthCubit>(context);
-    debugPrint(_emailController.text);
-    cubit.signInWithEmailAndPassword(
+   
+ if(_globalKey.currentState!.validate()){
+     cubit.signInWithEmailAndPassword(
         _emailController.text, _passwordController.text);
+ }
+  }
+
+  String? validEmail(String email) {
+    RegExp emailRegex = RegExp(r'^[\w-]+(\.[\w-]+)*@[\w-]+(\.[\w-]+)+$');
+    if (emailRegex.hasMatch(email)) {
+      return null;
+    } else {
+      return 'Please enter a valid email';
+    }
+  }
+
+  String? validPassword(String password) {
+    //RegExp passRegex =RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    if (password.length>=6) {
+      return null;
+    } else {
+      return 'Please enter a valid password';
+    }
   }
 
   @override
@@ -47,7 +67,8 @@ class _LoginFormState extends State<LoginForm> {
             ),
             TextFormField(
               controller: _emailController,
-              validator: (value) {},
+              validator: (value) => validEmail(value!), //importance of value!!
+
               decoration: InputDecoration(
                   hintText: 'Enter Email',
                   hintStyle: Theme.of(context).textTheme.bodyLarge!.copyWith(
@@ -71,7 +92,7 @@ class _LoginFormState extends State<LoginForm> {
             TextFormField(
               controller: _passwordController,
               obscureText: !_isVisible,
-              validator: (value) {},
+              validator: (value) => validPassword(value!),
               decoration: InputDecoration(
                   suffixIcon: InkWell(
                       onTap: () {
@@ -95,7 +116,9 @@ class _LoginFormState extends State<LoginForm> {
               bloc: cubit,
               listenWhen: (previous, current) =>
                   current is AuthFaliure || current is AuthSuccess,
-              buildWhen: (previous, current) => current is AuthLoading,
+              buildWhen: (previous, current) => current is AuthLoading||
+              current is AuthFaliure || current is AuthSuccess ||
+              current is AuthInitial,
               builder: (context, state) {
                 if (state is AuthLoading) {
                   return MainButton(
@@ -121,7 +144,8 @@ class _LoginFormState extends State<LoginForm> {
             ),
             Center(
                 child: InkWell(
-              onTap:() => Navigator.of(context).push(MaterialPageRoute(builder: (_)=>RegisterPage())), //signup
+              onTap: () => Navigator.of(context).push(
+                  MaterialPageRoute(builder: (_) => RegisterPage())), //signup
               child: Text(
                 'Create Account',
                 style: Theme.of(context).textTheme.bodyMedium!.copyWith(

@@ -9,7 +9,8 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 Future<void> main() async {
-  WidgetsFlutterBinding.ensureInitialized();//to ensure that firebase initialized 
+  WidgetsFlutterBinding
+      .ensureInitialized(); //to ensure that firebase initialized
   await Firebase.initializeApp(
     options: DefaultFirebaseOptions.currentPlatform,
   );
@@ -22,12 +23,28 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return BlocProvider(
-      create: (context) => AuthCubit(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: const LoginPage(),
-        theme: AppTheme.ligtTheme,
-        //check dark theme
+      create: (context) {
+        final cubit = AuthCubit();
+        cubit.getCurrentUser();
+        return cubit;
+      },
+      child: Builder(
+        builder: (context) {
+          final cubit = AuthCubit();
+          return BlocBuilder<AuthCubit, AuthState>(
+            bloc:cubit,
+            buildWhen: (previous, current) => current is AuthSuccess||
+            current is AuthInitial,
+            builder: (context, state) {
+              return MaterialApp(
+                debugShowCheckedModeBanner: false,
+                home:state is AuthInitial? const LoginPage():const CustomBottomBar(),
+                theme: AppTheme.ligtTheme,
+                //check dark theme
+              );
+            },
+          );
+        }
       ),
     );
   }
