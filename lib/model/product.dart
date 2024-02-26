@@ -46,6 +46,29 @@ class Product {
         size: size,
         productCategoryId: productCategoryId ?? this.productCategoryId);
   }
+
+  Map<String, dynamic> toMap() {
+    return {
+      'productId': productId,
+      'productName': productName,
+      'productPrice': productPrice,
+      'productImg': productImg,
+      'productDesc': productDescribtion,
+      'isFav': isFav,
+      'catId': productCategoryId
+    };
+  }
+
+  factory Product.fromMap(Map<String, dynamic> map, String id) {
+    return Product(
+        productId: id,
+        productName: map['productName'] ?? '',
+        productPrice: map['productPrice'] ?? 0,
+        productImg: map['productImg'] ?? '',
+        productDescribtion: map['productDesc'] ?? '',
+        isFav: map['isFav'] ?? false,
+        productCategoryId: map['productCategoryId'] ?? '');
+  }
 }
 
 List<Product> dummy_product = [
@@ -154,4 +177,4 @@ List<Product> dummy_product = [
   ),
 ];
 
-List<Product> favProduct=[];
+List<Product> favProduct = [];

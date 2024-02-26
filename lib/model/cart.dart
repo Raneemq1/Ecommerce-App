@@ -13,6 +13,10 @@ class Cart {
       required this.quantity,
       required this.totalPrice,
       required this.status});
+
+  Map<String, dynamic> toMap() {
+    return {};
+  }
 }
 
 List<Cart> shoppingCart = [];

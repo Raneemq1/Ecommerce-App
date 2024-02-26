@@ -23,7 +23,8 @@ class FavoriteCubit extends Cubit<FavoriteStatus> {
     favProduct
         .removeWhere((product) => product.productName == newProduct.productName);
 
-    int index = dummy_product
+//remove dummy_product
+   int index = dummy_product
         .indexWhere((product) => product.productName == newProduct.productName);
     dummy_product[index] = dummy_product[index].copyWith(isFav: false);
     emit(FavoriteLoaded( favProduct, dummy_categories));

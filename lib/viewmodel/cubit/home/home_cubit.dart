@@ -1,16 +1,21 @@
 import 'package:ecommerce_app/model/product.dart';
+import 'package:ecommerce_app/services/home_services.dart';
 import 'package:ecommerce_app/viewmodel/cubit/home/home_status.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 
 class HomeCubit extends Cubit<HomeStatus> {
   HomeCubit() : super(HomeInitial());
+  final homeService = HomeServiceImp();
+  
 
   void getData() async {
     emit(HomeLoading());
     try {
-      await Future.delayed(const Duration(seconds: 2));
-      emit(HomeLoaded(dummy_product, favProduct));
+       final products = await homeService.getData();
+      emit(HomeLoaded(products, favProduct));
     } catch (e) {
+      debugPrint('error raneem $e.toString()');
       emit(HomeError(errorMsg: e.toString()));
     }
   }
@@ -25,7 +30,8 @@ class HomeCubit extends Cubit<HomeStatus> {
       favProduct.removeWhere(
           (product) => product.productName == newProduct.productName);
     }
+    //remove dummy_product
     dummy_product[index] = newProduct;
-    emit(HomeLoaded(dummy_product, favProduct));
+   emit(HomeLoaded(dummy_product, favProduct));
   }
 }

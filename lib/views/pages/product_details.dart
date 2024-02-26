@@ -27,6 +27,7 @@ class _ProductDetailsState extends State<ProductDetails> {
       child: Builder(builder: (context) {
         final cubit = BlocProvider.of<ProductDetailsCubit>(context);
         return BlocBuilder<ProductDetailsCubit, ProductDetailsStatus>(
+          bloc: cubit,
           builder: (context, state) {
             return Scaffold(
                 extendBodyBehindAppBar: true,

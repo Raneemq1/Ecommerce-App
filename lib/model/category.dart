@@ -7,6 +7,21 @@ class Category {
       {required this.categoryId,
       required this.categoryName,
       required this.categoryImg});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'catId': categoryId,
+      'catName': categoryName,
+      'catImg': categoryImg
+    };
+  }
+
+  factory Category.fromMap(Map<String, dynamic> map, String id) {
+    return Category(
+        categoryId: id,
+        categoryName: map['catName'] ?? '',
+        categoryImg: map['catImg'] ?? '');
+  }
 }
 
 List<Category> dummy_categories = [

@@ -1,4 +1,11 @@
 import 'package:cached_network_image/cached_network_image.dart';
+import 'package:ecommerce_app/model/ads.dart';
+import 'package:ecommerce_app/model/category.dart';
+import 'package:ecommerce_app/model/product.dart';
+import 'package:ecommerce_app/model/user.dart';
+import 'package:ecommerce_app/services/ads_service.dart';
+import 'package:ecommerce_app/services/firestore_services.dart';
+import 'package:ecommerce_app/utils/api_paths.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/views/pages/cart_page.dart';
 import 'package:ecommerce_app/views/pages/favorite_page.dart';
@@ -16,6 +23,44 @@ class CustomBottomBar extends StatefulWidget {
 }
 
 class _CustomBottomBarState extends State<CustomBottomBar> {
+  final _firestoreService = FirestoreService.instance;
+  
+  @override
+  void initState() {
+    super.initState();
+    //sendUser();
+    //sendProducts();
+    //sendCategories();
+    //sendAds();
+  }
+
+  //Upload data to firestore
+  /* void sendProducts() async {
+    dummy_product.forEach((product) async {
+      await _firestoreService.setData(
+          path: ApiPaths.getProduct(product.productId), data: product.toMap());
+    });
+  }
+
+  void sendCategories() async {
+    dummy_categories.forEach((cat) async {
+      await _firestoreService.setData(
+          path: ApiPaths.getCategories(cat.categoryId), data: cat.toMap());
+    });
+  }
+
+  void sendUser() async {
+    await _firestoreService.setData(
+        path: ApiPaths.getUser(dummyUser.id), data: dummyUser.toMap());
+  }
+
+  void sendAds() async {
+    dummy_ads.forEach((ad) async {
+      await _firestoreService.setData(
+          path: ApiPaths.getAds(ad.adId), data: ad.toMap());
+    });
+  }*/
+
   List<Widget> _buildScreens() {
     return [
       const HomePage(),

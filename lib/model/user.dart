@@ -11,6 +11,25 @@ class User {
       required this.email,
       required this.phone,
       required this.address});
+
+  Map<String, dynamic> toMap() {
+    return {
+      'id': id,
+      'name': name,
+      'email': email,
+      'phone': phone,
+      'address': address
+    };
+  }
+
+  factory User.fromMap(Map<String, dynamic> map, String id) {
+    return User(
+        id: id,
+        name: map['name'] ?? '',
+        email: map['email'] ?? '',
+        phone: map['phone'] ?? '',
+        address: map['address'] ?? '');
+  }
 }
 
 User dummyUser = User(

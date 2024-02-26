@@ -1,14 +1,17 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/model/category.dart';
 import 'package:ecommerce_app/model/product.dart';
+import 'package:ecommerce_app/services/home_services.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:flutter/material.dart';
 
 class SearchPage extends StatelessWidget {
-  const SearchPage({super.key});
+  SearchPage({super.key});
 
   @override
   Widget build(BuildContext context) {
+
+
     return Scaffold(
         appBar: AppBar(
             title: const SizedBox(
@@ -173,8 +176,7 @@ class SearchPage extends StatelessWidget {
                                   Row(
                                     children: [
                                       CachedNetworkImage(
-                                        imageUrl:
-                                            dummy_product[index].productImg,
+                                        imageUrl: dummy_product[index].productImg,
                                         fit: BoxFit.contain,
                                         width: 100,
                                       ),
@@ -187,8 +189,7 @@ class SearchPage extends StatelessWidget {
                                         crossAxisAlignment:
                                             CrossAxisAlignment.start,
                                         children: [
-                                          Text(
-                                              dummy_product[index].productName),
+                                          Text(dummy_product[index].productName),
                                           Text(dummy_categories[int.parse(
                                                       dummy_product[index]
                                                           .productCategoryId) -
@@ -212,8 +213,7 @@ class SearchPage extends StatelessWidget {
                                     style: ButtonStyle(
                                         backgroundColor:
                                             MaterialStatePropertyAll(
-                                                dummy_product[index].isFav ==
-                                                        true
+                                                dummy_product[index].isFav == true
                                                     ? AppColors.blue
                                                     : AppColors.red)),
                                   )
