@@ -1,9 +1,13 @@
+import 'package:ecommerce_app/model/user.dart';
+import 'package:ecommerce_app/services/firestore_services.dart';
+import 'package:ecommerce_app/utils/api_paths.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/viewmodel/cubit/auth/auth_cubit.dart';
 import 'package:ecommerce_app/viewmodel/cubit/auth/auth_state.dart';
 import 'package:ecommerce_app/views/pages/custom_bottombar.dart';
 import 'package:ecommerce_app/views/pages/login_page.dart';
 import 'package:ecommerce_app/views/widgets/login_form.dart';
+import 'package:uuid/uuid.dart';
 import 'package:ecommerce_app/views/widgets/main_button.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -22,6 +26,8 @@ class _RegisterFormState extends State<RegisterForm> {
   final _nameController = TextEditingController();
   final _phoneController = TextEditingController();
   final _addressController = TextEditingController();
+  final _firestoreService = FirestoreService.instance;
+
   bool _isVisible = false;
 
   void signUp() {
@@ -30,6 +36,7 @@ class _RegisterFormState extends State<RegisterForm> {
     if (_globalKey.currentState!.validate()) {
       cubit.signUpWithEmailAndPassword(
           _emailController.text, _passwordController.text);
+      sendUser();
     }
   }
 
@@ -44,8 +51,8 @@ class _RegisterFormState extends State<RegisterForm> {
 
   String? validPassword() {
     //RegExp passRegex =
-        //RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
-    if (_passwordController.text.length>=6) {
+    //RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
+    if (_passwordController.text.length >= 6) {
       return null;
     } else {
       return 'Please enter a valid password';
@@ -60,6 +67,18 @@ class _RegisterFormState extends State<RegisterForm> {
     }
   }
 
+  void sendUser() async {
+    String id = const Uuid().v1();
+    final user = User(
+        id: id,
+        name: _nameController.text,
+        email: _emailController.text,
+        phone: _phoneController.text,
+        address: _addressController.text);
+    await _firestoreService.setData(
+        path: ApiPaths.getUser(user.id), data: user.toMap());
+  }
+
   @override
   Widget build(BuildContext context) {
     final cubit = BlocProvider.of<AuthCubit>(context);
@@ -70,8 +89,7 @@ class _RegisterFormState extends State<RegisterForm> {
             TextFormField(
               controller: _emailController,
               validator: (value) => validEmail(),
-              decoration:
-                  InputDecoration(hintText: 'Enter Email'),
+              decoration: InputDecoration(hintText: 'Enter Email'),
             ),
             const SizedBox(
               height: 15,
@@ -82,7 +100,6 @@ class _RegisterFormState extends State<RegisterForm> {
                 validator: (value) => validPassword(),
                 decoration: InputDecoration(
                     hintText: 'Enter Password',
-                    
                     suffixIcon: InkWell(
                         onTap: () {
                           setState(() {
@@ -98,24 +115,21 @@ class _RegisterFormState extends State<RegisterForm> {
             TextFormField(
                 controller: _nameController,
                 validator: (value) => validInput(value!),
-                decoration:
-                    InputDecoration(hintText: 'Enter Name')),
+                decoration: InputDecoration(hintText: 'Enter Name')),
             const SizedBox(
               height: 15,
             ),
             TextFormField(
                 controller: _addressController,
                 validator: (value) => validInput(value!),
-                decoration: InputDecoration(
-                    hintText: 'Enter Address')),
+                decoration: InputDecoration(hintText: 'Enter Address')),
             const SizedBox(
               height: 15,
             ),
             TextFormField(
                 controller: _phoneController,
                 validator: (value) => validInput(value!),
-                decoration: InputDecoration(
-                    hintText: 'Enter Phone')),
+                decoration: InputDecoration(hintText: 'Enter Phone')),
             const SizedBox(
               height: 40,
             ),
@@ -135,7 +149,7 @@ class _RegisterFormState extends State<RegisterForm> {
                 }
                 return MainButton(
                   title: 'Sign Up',
-                  onPressed:signUp,
+                  onPressed: signUp,
                 );
               },
               listener: (context, state) {

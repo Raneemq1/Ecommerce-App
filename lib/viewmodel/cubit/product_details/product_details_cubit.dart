@@ -12,7 +12,7 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStatus> {
     emit(ProductDetailsLoading());
 
     try {
-      await Future.delayed(const Duration(seconds: 2));
+      
       final products = await homeService.getData();
       Product product = products.firstWhere(
         (product) => product.productId == productId,

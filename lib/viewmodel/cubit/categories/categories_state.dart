@@ -7,8 +7,8 @@ class CategoriesInitail extends CategoriesStatus {}
 class CategoriesLoading extends CategoriesStatus {}
 
 class CategoriesLoaded extends CategoriesStatus {
-  List<Category> dummy_categories;
-  CategoriesLoaded(this.dummy_categories);
+  List<Category> dummyCategories;
+  CategoriesLoaded(this.dummyCategories);
 }
 
 class CategoriesError extends CategoriesStatus {

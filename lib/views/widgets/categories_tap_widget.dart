@@ -13,82 +13,73 @@ class CategoriesTap extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-   
-
     return BlocProvider(
-      create: (context) {
-        final cubit = CategoriesCubit();
-        cubit.getData();
-        return cubit;
-      },
-      child: Builder(builder: (context) {
-        return BlocBuilder<CategoriesCubit, CategoriesStatus>(
-          buildWhen: (previous, current) =>
-              current is CategoriesLoaded ||
-              current is CategoriesLoading ||
-              current is CategoriesError,
-          builder: (context, state) {
-            if (state is CategoriesLoaded) {
-              return ListView.builder(
-                  itemCount: state.dummy_categories.length,
-                  shrinkWrap: true,
-                  itemBuilder: (context, index) {
-                    debugPrint(state.dummy_categories[index].categoryName);
-                    return Padding(
-                      padding: const EdgeInsets.all(8.0),
-                      child: Stack(children: [
-                        Card(
-                          child: CachedNetworkImage(
-                              imageUrl:
-                                  state.dummy_categories[index].categoryImg,
-                              height: 130,
-                              width: double.infinity,
-                              fit: BoxFit.cover),
-                        ),
-                        Positioned(
-                            bottom: 60,
-                            left: 15,
-                            child: Column(
-                              children: [
-                                Text(
-                                  state.dummy_categories[index].categoryName,
-                                  style: Theme.of(context)
-                                      .textTheme
-                                      .bodyLarge!
-                                      .copyWith(
-                                        color: AppColors.black,
-                                        fontWeight: FontWeight.w600,
-                                        fontSize: 14,
-                                      ),
-                                ),
-                                Text(
-                                    '${countProductsInCategory(state.dummy_categories[index].categoryName).toString()} Product'),
-                              ],
-                            )),
-                      ]),
-                    );
-                  });
-            } else if (state is CategoriesLoading) {
-              return const Center(child: CircularProgressIndicator.adaptive());
-            } else {
-              return const SizedBox();
-            }
-          },
-        );
-      }),
+      create: (context) => CategoriesCubit()..getData(),
+      child: BlocBuilder<CategoriesCubit, CategoriesStatus>(
+        builder: (context, state) {
+          debugPrint('categories page : $state.toString()');
+          if (state is CategoriesLoaded) {
+            debugPrint('categories page:state.dummyCategories[0].categoryName');
+            return ListView.builder(
+                itemCount: state.dummyCategories.length,
+                shrinkWrap: true,
+                itemBuilder: (context, index) {
+                  debugPrint(state.dummyCategories[index].categoryName);
+                  return Padding(
+                    padding: const EdgeInsets.all(8.0),
+                    child: Stack(children: [
+                      Card(
+                        child: CachedNetworkImage(
+                            imageUrl: state.dummyCategories[index].categoryImg,
+                            height: 130,
+                            width: double.infinity,
+                            fit: BoxFit.cover),
+                      ),
+                      Positioned(
+                          bottom: 60,
+                          left: 15,
+                          child: Column(
+                            children: [
+                              Text(
+                                state.dummyCategories[index].categoryName,
+                                style: Theme.of(context)
+                                    .textTheme
+                                    .bodyLarge!
+                                    .copyWith(
+                                      color: AppColors.black,
+                                      fontWeight: FontWeight.w600,
+                                      fontSize: 14,
+                                    ),
+                              ),
+                              Text(
+                                  '${countProductsInCategory(state.dummyCategories[index].categoryName).toString()} Product'),
+                            ],
+                          )),
+                    ]),
+                  );
+                });
+          } else if (state is CategoriesLoading) {
+            return const Center(child: CircularProgressIndicator.adaptive());
+          } else {
+            return const SizedBox();
+          }
+        },
+      ),
     );
   }
 }
 
 int countProductsInCategory(String categoryName) {
+  debugPrint('categories page: $categoryName here');
   int count = 0;
 
   dummy_product.forEach((element) {
+    debugPrint('categories page: ${element.productId.length} ${categoryName}');
     dummy_categories[int.parse(element.productCategoryId) - 1].categoryName ==
             categoryName
         ? count++
         : 0;
   });
-
+  debugPrint('categories page: $count');
   return count;
 }
