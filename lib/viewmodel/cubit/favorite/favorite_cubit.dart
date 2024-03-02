@@ -2,6 +2,7 @@ import 'package:ecommerce_app/model/category.dart';
 import 'package:ecommerce_app/model/product.dart';
 import 'package:ecommerce_app/model/user.dart';
 import 'package:ecommerce_app/services/auth_service.dart';
+import 'package:ecommerce_app/services/cart_service.dart';
 import 'package:ecommerce_app/services/category_service.dart';
 import 'package:ecommerce_app/services/favorite_service.dart';
 import 'package:ecommerce_app/services/home_services.dart';
@@ -23,6 +24,8 @@ class FavoriteCubit extends Cubit<FavoriteStatus> {
   void getData() async {
     emit(FavoriteLoading());
     try {
+       
+
       final products = await _homeService.getData();
       final categories = await _categoryService.getData();
      
@@ -38,7 +41,7 @@ class FavoriteCubit extends Cubit<FavoriteStatus> {
     final products = await _homeService.getData();
     
     //remove from favProducts and update the value
-    favoriteService.deleteData(newProduct.productId);
+     favoriteService.deleteData(newProduct.productId);
 
     var prefrencesUser = await favoriteService.getData();
   

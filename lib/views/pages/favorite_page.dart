@@ -17,7 +17,7 @@ class FavoritePage extends StatefulWidget {
 }
 
 class _FavoritePageState extends State<FavoritePage> {
-  late List<Product> filteredProducts;
+  List<Product> filteredProducts = [];
   late List<Product> filteredProductBefore;
   int selected = -1;
 
@@ -41,8 +41,10 @@ class _FavoritePageState extends State<FavoritePage> {
             if (state is FavoriteLoaded) {
               final dummyCat = state.dummyCategorites;
               final favProducts = state.favProducts;
-              if(filteredProducts.isEmpty&&selected==-1)
-              filteredProducts = favProducts;
+
+              if ((filteredProducts.isEmpty && selected == -1) ||
+                  (favProducts.length < filteredProducts.length))
+                filteredProducts = favProducts;
 
               return SingleChildScrollView(
                 child: Padding(
@@ -216,7 +218,10 @@ class _FavoritePageState extends State<FavoritePage> {
                                                 borderRadius:
                                                     BorderRadius.circular(10)),
                                             child: Icon(
-                                              favProducts.any((element) => element.productId == filteredProducts[index].productId)
+                                              favProducts.any((element) =>
+                                                      element.productId ==
+                                                      filteredProducts[index]
+                                                          .productId)
                                                   ? Icons.favorite
                                                   : Icons.favorite_outline,
                                               color: AppColors.orange,

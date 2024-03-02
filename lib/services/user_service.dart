@@ -10,8 +10,9 @@ class UserServiceImp implements UserService{
 
   final _firestoreService=FirestoreService.instance;
   @override
-  Future<List<User>> getData() async{//why no return
-    return await _firestoreService.getCollection<User>(path:ApiPaths.users, builder:(data, documentId) => User.fromMap(data,documentId), );
+  Future<List<User>> getData() async{
+    return await _firestoreService.getCollection<User>(path:ApiPaths.users,
+     builder:(data, documentId) => User.fromMap(data,documentId), );
    
   }
 

@@ -34,7 +34,7 @@ class HomeTap extends StatelessWidget {
               debugPrint('infavorite:${favProducts.length.toString()}');
 
               List<Product> dummyProducts = state.dummyProducts;
-                debugPrint('Ranooom1:${favProducts.length.toString()}');
+
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
@@ -119,9 +119,6 @@ class HomeTap extends StatelessWidget {
                                             BlocProvider.of<HomeCubit>(context);
                                         cubit.changeFavoriteStatus(
                                             dummyProducts[index]);
-                                       
-                                          debugPrint('Ranooom2:${favProducts.length.toString()}');
-                                     
                                       },
                                       child: DecoratedBox(
                                         decoration: BoxDecoration(
@@ -129,8 +126,10 @@ class HomeTap extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Icon(
-                                          
-                                        favProducts.any((element) => element.productId == dummyProducts[index].productId)
+                                          favProducts.any((element) =>
+                                                  element.productId ==
+                                                  dummyProducts[index]
+                                                      .productId)
                                               ? Icons.favorite
                                               : Icons.favorite_outline,
                                           color: AppColors.orange,

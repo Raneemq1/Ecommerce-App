@@ -1,5 +1,6 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/model/cart.dart';
+import 'package:ecommerce_app/services/cart_service.dart';
 import 'package:ecommerce_app/viewmodel/cubit/product_details/product_details_cubit.dart';
 import 'package:ecommerce_app/viewmodel/cubit/product_details/product_details_status.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
@@ -18,6 +19,7 @@ class ProductDetails extends StatefulWidget {
 }
 
 class _ProductDetailsState extends State<ProductDetails> {
+  final _cartService = CartServiceImp();
   @override
   Widget build(BuildContext context) {
     bool switctValue = true;
@@ -256,15 +258,16 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                                                 final cart = Cart(
                                                     id: id,
-                                                    shoppingItem:
-                                                        widget.product,
+                                                    productId:
+                                                        widget.product.productId,
                                                     quantity: quantity,
                                                     totalPrice: widget.product
                                                             .productPrice *
                                                         double.parse(quantity
                                                             .toString()),
                                                     status: 'Pending');
-                                                shoppingCart.add(cart);
+                                                //shoppingCart.add(cart);
+                                                _cartService.setData(cart);
                                                 showDialog(
                                                   context: context,
                                                   builder: (context) =>
@@ -344,14 +347,14 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                                                 final cart = Cart(
                                                     id: id,
-                                                    shoppingItem:
-                                                        widget.product,
+                                                    productId:
+                                                        widget.product.productId,
                                                     quantity: 1,
                                                     totalPrice: widget.product
                                                             .productPrice *
                                                         1.0,
                                                     status: 'Pending');
-                                                shoppingCart.add(cart);
+                                                //shoppingCart.add(cart);
                                                 showDialog(
                                                   context: context,
                                                   builder: (context) =>
