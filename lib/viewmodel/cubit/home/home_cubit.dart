@@ -18,7 +18,7 @@ class HomeCubit extends Cubit<HomeStatus> {
     emit(HomeLoading());
     try {
       final products = await homeService.getData();
-      final user = await _authService.currentUser();
+
       //instead of this use getCertain data to return specifc data
       var prefrencesUser = await favoriteService.getData();
       emit(HomeLoaded(products, prefrencesUser));
@@ -35,10 +35,13 @@ class HomeCubit extends Cubit<HomeStatus> {
     //get the data before edit
     var products = await homeService.getData();
     var prefrencesUser = await favoriteService.getData();
-    
 
-    isFav = prefrencesUser.contains(newProduct);
-  
+    prefrencesUser.forEach((product) {
+      if (product.productId == newProduct.productId) {
+        isFav = true;
+      }
+    });
+    debugPrint('homecubit r: ${isFav.toString()}');
     if (!isFav) {
       favoriteService.setData(newProduct.productId);
       //favProduct.add(newProduct);
@@ -48,11 +51,9 @@ class HomeCubit extends Cubit<HomeStatus> {
       favoriteService.deleteData(newProduct.productId);
     }
 
-    debugPrint('homecubit: ${newProduct.productName}');
-
 //after edit
     prefrencesUser = await favoriteService.getData();
-   
+
     emit(HomeLoaded(products, prefrencesUser));
   }
 }

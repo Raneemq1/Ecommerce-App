@@ -127,8 +127,7 @@ class HomeTap extends StatelessWidget {
                                                 BorderRadius.circular(10)),
                                         child: Icon(
                                           favProducts.contains(
-                                                      dummyProducts[index]) ==
-                                                  true
+                                                      dummyProducts[index]) 
                                               ? Icons.favorite
                                               : Icons.favorite_outline,
                                           color: AppColors.orange,
