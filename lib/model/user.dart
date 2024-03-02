@@ -4,13 +4,19 @@ class User {
   final String email;
   final String phone;
   final String address;
+  
 
   User(
+      
       {required this.id,
       required this.name,
       required this.email,
       required this.phone,
-      required this.address});
+      required this.address,
+     
+      }
+      
+      );
 
   Map<String, dynamic> toMap() {
     return {
@@ -18,7 +24,8 @@ class User {
       'name': name,
       'email': email,
       'phone': phone,
-      'address': address
+      'address': address,
+     
     };
   }
 

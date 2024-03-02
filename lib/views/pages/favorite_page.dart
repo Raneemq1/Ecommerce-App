@@ -41,6 +41,7 @@ class _FavoritePageState extends State<FavoritePage> {
             if (state is FavoriteLoaded) {
               final dummyCat = state.dummyCategorites;
               final favProducts = state.favProducts;
+              if(filteredProducts.isEmpty&&selected==-1)
               filteredProducts = favProducts;
 
               return SingleChildScrollView(
@@ -215,8 +216,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                                 borderRadius:
                                                     BorderRadius.circular(10)),
                                             child: Icon(
-                                              favProducts.contains(
-                                                      filteredProducts[index])
+                                              favProducts.any((element) => element.productId == filteredProducts[index].productId)
                                                   ? Icons.favorite
                                                   : Icons.favorite_outline,
                                               color: AppColors.orange,

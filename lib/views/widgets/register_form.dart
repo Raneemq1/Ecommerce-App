@@ -68,13 +68,17 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   void sendUser() async {
+   
     String id = const Uuid().v1();
     final user = User(
-        id: id,
-        name: _nameController.text,
-        email: _emailController.text,
-        phone: _phoneController.text,
-        address: _addressController.text);
+      id: id,
+      name: _nameController.text,
+      email: _emailController.text,
+      phone: _phoneController.text,
+      address: _addressController.text,
+     
+    );
+
     await _firestoreService.setData(
         path: ApiPaths.getUser(user.id), data: user.toMap());
   }

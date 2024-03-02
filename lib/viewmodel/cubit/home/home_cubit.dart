@@ -29,9 +29,9 @@ class HomeCubit extends Cubit<HomeStatus> {
   }
 
   void changeFavoriteStatus(Product newProduct) async {
+   
     bool isFav = false;
-    //newProduct = newProduct.copyWith(isFav: !newProduct.isFav);
-
+   
     //get the data before edit
     var products = await homeService.getData();
     var prefrencesUser = await favoriteService.getData();

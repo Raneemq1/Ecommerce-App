@@ -31,9 +31,10 @@ class HomeTap extends StatelessWidget {
               return const Center(child: CircularProgressIndicator.adaptive());
             } else if (state is HomeLoaded) {
               List<Product> favProducts = state.favProducts;
+              debugPrint('infavorite:${favProducts.length.toString()}');
 
               List<Product> dummyProducts = state.dummyProducts;
-
+                debugPrint('Ranooom1:${favProducts.length.toString()}');
               return SingleChildScrollView(
                 child: Padding(
                   padding: const EdgeInsets.all(30.0),
@@ -112,13 +113,15 @@ class HomeTap extends StatelessWidget {
                                     child: InkWell(
                                       onTap: () {
                                         //favorite and unfavoirte in home page
-                                        
+
                                         // Access the HomeCubit instance provided by BlocProvider
                                         final cubit =
                                             BlocProvider.of<HomeCubit>(context);
                                         cubit.changeFavoriteStatus(
                                             dummyProducts[index]);
-                                           
+                                       
+                                          debugPrint('Ranooom2:${favProducts.length.toString()}');
+                                     
                                       },
                                       child: DecoratedBox(
                                         decoration: BoxDecoration(
@@ -126,8 +129,8 @@ class HomeTap extends StatelessWidget {
                                             borderRadius:
                                                 BorderRadius.circular(10)),
                                         child: Icon(
-                                          favProducts.contains(
-                                                      dummyProducts[index]) 
+                                          
+                                        favProducts.any((element) => element.productId == dummyProducts[index].productId)
                                               ? Icons.favorite
                                               : Icons.favorite_outline,
                                           color: AppColors.orange,
