@@ -1,6 +1,7 @@
 import 'package:cached_network_image/cached_network_image.dart';
 import 'package:ecommerce_app/model/category.dart';
 import 'package:ecommerce_app/model/product.dart';
+import 'package:ecommerce_app/services/favorite_service.dart';
 import 'package:ecommerce_app/utils/app_colors.dart';
 import 'package:ecommerce_app/viewmodel/cubit/favorite/favorite_cubit.dart';
 import 'package:ecommerce_app/viewmodel/cubit/favorite/favorite_status.dart';
@@ -19,11 +20,6 @@ class _FavoritePageState extends State<FavoritePage> {
   late List<Product> filteredProducts;
   late List<Product> filteredProductBefore;
   int selected = -1;
-  @override
-  void initState() {
-    super.initState();
-    filteredProducts = favProduct;
-  }
 
   @override
   Widget build(BuildContext context) {
@@ -45,6 +41,7 @@ class _FavoritePageState extends State<FavoritePage> {
             if (state is FavoriteLoaded) {
               final dummyCat = state.dummyCategorites;
               final favProducts = state.favProducts;
+              filteredProducts = favProducts;
 
               return SingleChildScrollView(
                 child: Padding(
@@ -209,7 +206,7 @@ class _FavoritePageState extends State<FavoritePage> {
                                               filteredProducts.remove(product);
                                             }
                                             //unfavorite product and update isFav bool
-                                            
+
                                             cubit.changeFavoriteStatus(product);
                                           },
                                           child: DecoratedBox(
@@ -218,7 +215,8 @@ class _FavoritePageState extends State<FavoritePage> {
                                                 borderRadius:
                                                     BorderRadius.circular(10)),
                                             child: Icon(
-                                              filteredProducts[index].isFav
+                                              favProducts.contains(
+                                                      filteredProducts[index])
                                                   ? Icons.favorite
                                                   : Icons.favorite_outline,
                                               color: AppColors.orange,

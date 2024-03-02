@@ -20,132 +20,137 @@ class HomeTap extends StatelessWidget {
         cubit.getData();
         return cubit;
       },
-      child: Builder(
-        builder: (context) {
-          return BlocBuilder<HomeCubit, HomeStatus>(
-            buildWhen: (previous, current) =>
-                current is HomeLoading ||
-                current is HomeLoaded ||
-                current is HomeError,
-            builder: (context, state) {
-              if (state is HomeLoading) {
-                return const Center(child: CircularProgressIndicator.adaptive());
-              } else if (state is HomeLoaded) {
-                List<Product> dummyProducts = state.dummyProducts;
-                return SingleChildScrollView(
-                  child: Padding(
-                    padding: const EdgeInsets.all(30.0),
-                    child: Column(
-                      children: [
-                         const CustomCarousel(),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        Row(
-                          mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                          children: [
-                            Text(
-                              'New Arrivals',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(
-                                      fontSize: 16,
-                                      color: AppColors.black,
-                                      fontWeight: FontWeight.w600),
-                            ),
-                            Text(
-                              'See More',
-                              style: Theme.of(context)
-                                  .textTheme
-                                  .bodyLarge!
-                                  .copyWith(fontSize: 14),
-                            ),
-                          ],
-                        ),
-                        const SizedBox(
-                          height: 20,
-                        ),
-                        GridView.builder(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            gridDelegate:
-                                const SliverGridDelegateWithFixedCrossAxisCount(
-                                    crossAxisCount: 2,
-                                    mainAxisSpacing: 10,
-                                    crossAxisSpacing: 10),
-                            itemCount: dummyProducts.length,
-                            itemBuilder: (context, index) {
-                              return InkWell(
-                                onTap: () {
-                                  Navigator.of(context, rootNavigator: true).push(
-                                      MaterialPageRoute(
-                                          builder: (context) => ProductDetails(
-                                              product: dummyProducts[index])));
-                                },
-                                child: Card(
-                                  child: Stack(children: [
-                                    Column(
-                                      mainAxisAlignment: MainAxisAlignment.center,
-                                      crossAxisAlignment: CrossAxisAlignment.center,
-                                      children: [
-                                        Center(
-                                          child: CachedNetworkImage(
-                                              imageUrl:
-                                                  dummyProducts[index].productImg,
-                                              height: 100,
-                                              width: 150,
-                                              fit: BoxFit.contain),
-                                        ),
-                                        const SizedBox(
-                                          height: 10,
-                                        ),
-                                        Text(dummyProducts[index].productName),
-                                      ],
-                                    ),
-                                    Positioned(
-                                      top: 0,
-                                      right: 0,
-                                      child: InkWell(
-                                        onTap: () {
-                                         //favorite and unfavoirte in home page 
+      child: Builder(builder: (context) {
+        return BlocBuilder<HomeCubit, HomeStatus>(
+          buildWhen: (previous, current) =>
+              current is HomeLoading ||
+              current is HomeLoaded ||
+              current is HomeError,
+          builder: (context, state) {
+            if (state is HomeLoading) {
+              return const Center(child: CircularProgressIndicator.adaptive());
+            } else if (state is HomeLoaded) {
+              List<Product> favProducts = state.favProducts;
 
-                                          // Access the HomeCubit instance provided by BlocProvider
-                                         final cubit = BlocProvider.of<HomeCubit>(context);
-                                          cubit.changeFavoriteStatus(
-                                              dummyProducts[index]);
-                                          debugPrint(favProduct.length.toString());
-                                        },
-                                        child: DecoratedBox(
-                                          decoration: BoxDecoration(
-                                              color: AppColors.bgColor,
-                                              borderRadius:
-                                                  BorderRadius.circular(10)),
-                                          child: Icon(
-                                            dummyProducts[index].isFav == true
-                                                ? Icons.favorite
-                                                : Icons.favorite_outline,
-                                            color: AppColors.orange,
-                                            size: 22,
-                                          ),
+              List<Product> dummyProducts = state.dummyProducts;
+
+              return SingleChildScrollView(
+                child: Padding(
+                  padding: const EdgeInsets.all(30.0),
+                  child: Column(
+                    children: [
+                      const CustomCarousel(),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      Row(
+                        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                        children: [
+                          Text(
+                            'New Arrivals',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(
+                                    fontSize: 16,
+                                    color: AppColors.black,
+                                    fontWeight: FontWeight.w600),
+                          ),
+                          Text(
+                            'See More',
+                            style: Theme.of(context)
+                                .textTheme
+                                .bodyLarge!
+                                .copyWith(fontSize: 14),
+                          ),
+                        ],
+                      ),
+                      const SizedBox(
+                        height: 20,
+                      ),
+                      GridView.builder(
+                          shrinkWrap: true,
+                          physics: const NeverScrollableScrollPhysics(),
+                          gridDelegate:
+                              const SliverGridDelegateWithFixedCrossAxisCount(
+                                  crossAxisCount: 2,
+                                  mainAxisSpacing: 10,
+                                  crossAxisSpacing: 10),
+                          itemCount: dummyProducts.length,
+                          itemBuilder: (context, index) {
+                            return InkWell(
+                              onTap: () {
+                                Navigator.of(context, rootNavigator: true).push(
+                                    MaterialPageRoute(
+                                        builder: (context) => ProductDetails(
+                                            product: dummyProducts[index])));
+                              },
+                              child: Card(
+                                child: Stack(children: [
+                                  Column(
+                                    mainAxisAlignment: MainAxisAlignment.center,
+                                    crossAxisAlignment:
+                                        CrossAxisAlignment.center,
+                                    children: [
+                                      Center(
+                                        child: CachedNetworkImage(
+                                            imageUrl:
+                                                dummyProducts[index].productImg,
+                                            height: 100,
+                                            width: 150,
+                                            fit: BoxFit.contain),
+                                      ),
+                                      const SizedBox(
+                                        height: 10,
+                                      ),
+                                      Text(dummyProducts[index].productName),
+                                    ],
+                                  ),
+                                  Positioned(
+                                    top: 0,
+                                    right: 0,
+                                    child: InkWell(
+                                      onTap: () {
+                                        //favorite and unfavoirte in home page
+                                        
+                                        // Access the HomeCubit instance provided by BlocProvider
+                                        final cubit =
+                                            BlocProvider.of<HomeCubit>(context);
+                                        cubit.changeFavoriteStatus(
+                                            dummyProducts[index]);
+                                           
+                                      },
+                                      child: DecoratedBox(
+                                        decoration: BoxDecoration(
+                                            color: AppColors.bgColor,
+                                            borderRadius:
+                                                BorderRadius.circular(10)),
+                                        child: Icon(
+                                          favProducts.contains(
+                                                      dummyProducts[index]) ==
+                                                  true
+                                              ? Icons.favorite
+                                              : Icons.favorite_outline,
+                                          color: AppColors.orange,
+                                          size: 22,
                                         ),
                                       ),
                                     ),
-                                  ]),
-                                ),
-                              );
-                            })
-                      ],
-                    ),
+                                  ),
+                                ]),
+                              ),
+                            );
+                          })
+                    ],
                   ),
-                );
-              } else {
-                return const SizedBox();
-              }
-            },
-          );
-        }
-      ),
+                ),
+              );
+            } else {
+              return const SizedBox();
+            }
+          },
+        );
+      }),
     );
   }
 }
