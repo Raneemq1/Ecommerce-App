@@ -21,3 +21,8 @@ class QuantityChanged extends ProductDetailsStatus {
   final int quantity;
   QuantityChanged(this.quantity);
 }
+
+class SizeChange extends ProductDetailsStatus {
+  final ProductSize size;
+  SizeChange(this.size);
+}

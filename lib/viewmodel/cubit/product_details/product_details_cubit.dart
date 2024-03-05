@@ -8,11 +8,12 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStatus> {
   ProductDetailsCubit() : super(ProductDetailsInitail());
   final homeService = HomeServiceImp();
   int quantity = 1;
+  ProductSize? size;
+
   void getData(String productId) async {
     emit(ProductDetailsLoading());
 
     try {
-      
       final products = await homeService.getData();
       Product product = products.firstWhere(
         (product) => product.productId == productId,
@@ -33,5 +34,10 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStatus> {
       quantity--;
       emit(QuantityChanged(quantity));
     }
+  }
+
+  void changeSize(ProductSize productSize) {
+    size = productSize;
+    emit(SizeChange(size!));
   }
 }

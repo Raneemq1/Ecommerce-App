@@ -23,6 +23,8 @@ class _ProductDetailsState extends State<ProductDetails> {
   @override
   Widget build(BuildContext context) {
     bool switctValue = true;
+    ProductSize? size;
+    int quantity;
 
     return BlocProvider(
       create: (context) => ProductDetailsCubit(),
@@ -134,49 +136,72 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     return Padding(
                                       padding:
                                           const EdgeInsets.only(right: 8.0),
-                                      child: InkWell(
-                                        onTap: () {
-                                          setState(() {
-                                            if (widget.product.size
-                                                    .toString() !=
-                                                ProductSize.values[index]
-                                                    .toString()) {
-                                              widget.product =
-                                                  widget.product.copyWith(
-                                                size: ProductSize.values[index],
-                                              );
-                                            } else {
-                                              widget.product = widget.product
-                                                  .copyWith(size: null);
-                                            }
-                                          });
-                                          debugPrint(
-                                              widget.product.size.toString());
+                                      child: BlocBuilder<ProductDetailsCubit,
+                                          ProductDetailsStatus>(
+                                        buildWhen: (previous, current) =>
+                                            current is SizeChange,
+                                        builder: (context, state) {
+                                          if (state is SizeChange) {
+                                            return InkWell(
+                                              onTap: () {
+                                                cubit.changeSize(
+                                                    ProductSize.values[index]);
+                                              },
+                                              child: CircleAvatar(
+                                                  backgroundColor: state.size ==
+                                                          ProductSize
+                                                              .values[index]
+                                                      ? AppColors.orange
+                                                      : AppColors.grey
+                                                          .withOpacity(0.4),
+                                                  radius: 20,
+                                                  child: Text(
+                                                    ProductSize
+                                                        .values[index].name,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: state.size ==
+                                                                    ProductSize
+                                                                            .values[
+                                                                        index]
+                                                                ? AppColors
+                                                                    .white
+                                                                : AppColors
+                                                                    .black),
+                                                  )),
+                                            );
+                                          } else {
+                                            return InkWell(
+                                              onTap: () {
+                                                cubit.changeSize(
+                                                    ProductSize.values[index]);
+                                              },
+                                              child: CircleAvatar(
+                                                  backgroundColor: AppColors
+                                                      .grey
+                                                      .withOpacity(0.4),
+                                                  radius: 20,
+                                                  child: Text(
+                                                    ProductSize
+                                                        .values[index].name,
+                                                    style: Theme.of(context)
+                                                        .textTheme
+                                                        .bodyMedium!
+                                                        .copyWith(
+                                                            fontSize: 16,
+                                                            fontWeight:
+                                                                FontWeight.bold,
+                                                            color: AppColors
+                                                                .black),
+                                                  )),
+                                            );
+                                          }
                                         },
-                                        child: CircleAvatar(
-                                            backgroundColor: widget
-                                                        .product.size ==
-                                                    ProductSize.values[index]
-                                                ? AppColors.orange
-                                                : AppColors.grey
-                                                    .withOpacity(0.4),
-                                            radius: 20,
-                                            child: Text(
-                                              ProductSize.values[index].name,
-                                              style: Theme.of(context)
-                                                  .textTheme
-                                                  .bodyMedium!
-                                                  .copyWith(
-                                                      fontSize: 16,
-                                                      fontWeight:
-                                                          FontWeight.bold,
-                                                      color: widget.product
-                                                                  .size ==
-                                                              ProductSize
-                                                                  .values[index]
-                                                          ? AppColors.white
-                                                          : AppColors.black),
-                                            )),
                                       ),
                                     );
                                   }),
@@ -239,10 +264,15 @@ class _ProductDetailsState extends State<ProductDetails> {
                                       ProductDetailsStatus>(
                                     bloc: cubit,
                                     buildWhen: (previous, current) =>
-                                        current is QuantityChanged,
+                                        current is QuantityChanged ||
+                                        current is SizeChange,
                                     builder: (context, state) {
+                                      if (state is SizeChange) {
+                                        size = state.size;
+                                      }
                                       if (state is QuantityChanged) {
-                                        int quantity = state.quantity;
+                                        quantity = state.quantity;
+
                                         return ElevatedButton(
                                             style: ButtonStyle(
                                                 backgroundColor:
@@ -258,8 +288,8 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                                                 final cart = Cart(
                                                     id: id,
-                                                    productId:
-                                                        widget.product.productId,
+                                                    productId: widget
+                                                        .product.productId,
                                                     quantity: quantity,
                                                     totalPrice: widget.product
                                                             .productPrice *
@@ -347,14 +377,15 @@ class _ProductDetailsState extends State<ProductDetails> {
 
                                                 final cart = Cart(
                                                     id: id,
-                                                    productId:
-                                                        widget.product.productId,
+                                                    productId: widget
+                                                        .product.productId,
                                                     quantity: 1,
                                                     totalPrice: widget.product
                                                             .productPrice *
                                                         1.0,
                                                     status: 'Pending');
                                                 //shoppingCart.add(cart);
+                                                _cartService.setData(cart);
                                                 showDialog(
                                                   context: context,
                                                   builder: (context) =>
