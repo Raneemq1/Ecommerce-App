@@ -36,94 +36,96 @@ class CartPage extends StatelessWidget {
                       child: Text('no added items yet'),
                     )
                   : SingleChildScrollView(
-                      child: ListView.builder(
-                      itemCount: shoppingCartItems.length,
-                      shrinkWrap: true,
-                      itemBuilder: (context, index) {
-                        final cart = shoppingCartItems[index];
-
-                        var product = products
-                            .where(
-                              (element) => element.productId == cart.productId,
-                            )
-                            .first;
-
-                        return Card(
-                            child: Padding(
-                          padding: const EdgeInsets.all(12.0),
-                          child: Column(
-                            children: [
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  Text(
-                                    product.productName,
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(fontSize: 16),
-                                  ),
-                                  Row(
-                                    mainAxisAlignment: MainAxisAlignment.end,
-                                    children: [
-                                      DecoratedBox(
-                                        decoration: BoxDecoration(
-                                            borderRadius:
-                                                BorderRadius.circular(5.0),
-                                            color: AppColors.orange
-                                                .withOpacity(0.2)),
-                                        child: Padding(
-                                          padding: const EdgeInsets.all(3.0),
-                                          child: Text(
-                                            cart.status,
-                                            style: Theme.of(context)
-                                                .textTheme
-                                                .bodyLarge!
-                                                .copyWith(
-                                                    color: AppColors.orange,
-                                                    fontSize: 14),
-                                          ),
+                    child: ListView.builder(
+                    itemCount: shoppingCartItems.length,
+                    physics: NeverScrollableScrollPhysics(),
+                    shrinkWrap: true,
+                    itemBuilder: (context, index) {
+                      final cart = shoppingCartItems[index];
+                  
+                      var product = products
+                          .where(
+                            (element) => element.productId == cart.productId,
+                          )
+                          .first;
+                  
+                      return Card(
+                          child: Padding(
+                        padding: const EdgeInsets.all(12.0),
+                        child: Column(
+                          children: [
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                Text(
+                                  product.productName,
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontSize: 16),
+                                ),
+                                Row(
+                                  mainAxisAlignment: MainAxisAlignment.end,
+                                  children: [
+                                    DecoratedBox(
+                                      decoration: BoxDecoration(
+                                          borderRadius:
+                                              BorderRadius.circular(5.0),
+                                          color: AppColors.orange
+                                              .withOpacity(0.2)),
+                                      child: Padding(
+                                        padding: const EdgeInsets.all(3.0),
+                                        child: Text(
+                                          cart.status,
+                                          style: Theme.of(context)
+                                              .textTheme
+                                              .bodyLarge!
+                                              .copyWith(
+                                                  color: AppColors.orange,
+                                                  fontSize: 14),
                                         ),
                                       ),
-                                      SizedBox(
-                                        width: 8,
-                                      ),
-                                      InkWell(
-                                          onTap: () {
-                                            //remove from carts
-                                            cubit.deleteOrder(cart.id);
-                                          },
-                                          child: Icon(Icons.delete)),
-                                    ],
-                                  ),
-                                ],
-                              ),
-                              const Divider(
-                                thickness: 0.5,
-                              ),
-                              Row(
-                                mainAxisAlignment:
-                                    MainAxisAlignment.spaceBetween,
-                                children: [
-                                  CachedNetworkImage(
-                                      imageUrl: product.productImg,
-                                      height: 80,
-                                      fit: BoxFit.cover),
-                                  Text(
-                                    '${cart.totalPrice.toString()} \$',
-                                    style: Theme.of(context)
-                                        .textTheme
-                                        .bodyLarge!
-                                        .copyWith(fontSize: 16),
-                                  )
-                                ],
-                              )
-                            ],
-                          ),
-                        ));
-                      },
-                    ));
+                                    ),
+                                    SizedBox(
+                                      width: 8,
+                                    ),
+                                    InkWell(
+                                        onTap: () {
+                                          //remove from carts
+                                          cubit.deleteOrder(cart.id);
+                                        },
+                                        child: Icon(Icons.delete)),
+                                  ],
+                                ),
+                              ],
+                            ),
+                            const Divider(
+                              thickness: 0.5,
+                            ),
+                            Row(
+                              mainAxisAlignment:
+                                  MainAxisAlignment.spaceBetween,
+                              children: [
+                                CachedNetworkImage(
+                                    imageUrl: product.productImg,
+                                    height: 80,
+                                    fit: BoxFit.cover),
+                                Text(
+                                  '${cart.totalPrice.toString()} \$',
+                                  style: Theme.of(context)
+                                      .textTheme
+                                      .bodyLarge!
+                                      .copyWith(fontSize: 16),
+                                )
+                              ],
+                            )
+                          ],
+                        ),
+                      ));
+                    },
+                      ),
+                  );
             } else {
               return const SizedBox();
             }

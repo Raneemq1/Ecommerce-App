@@ -24,7 +24,7 @@ class _ProductDetailsState extends State<ProductDetails> {
   Widget build(BuildContext context) {
     bool switctValue = true;
     ProductSize? size;
-    int quantity;
+    int quantity=1;
 
     return BlocProvider(
       create: (context) => ProductDetailsCubit(),
@@ -269,6 +269,96 @@ class _ProductDetailsState extends State<ProductDetails> {
                                     builder: (context, state) {
                                       if (state is SizeChange) {
                                         size = state.size;
+                                         return ElevatedButton(
+                                            style: ButtonStyle(
+                                                backgroundColor:
+                                                    MaterialStateProperty
+                                                        .resolveWith<Color>(
+                                              (states) => switctValue
+                                                  ? AppColors.orange
+                                                  : AppColors.grey,
+                                            )),
+                                            onPressed: () {
+                                              if (switctValue) {
+                                                String id = const Uuid().v1();
+
+                                                final cart = Cart(
+                                                    id: id,
+                                                    productId: widget
+                                                        .product.productId,
+                                                    quantity: quantity,
+                                                    totalPrice: widget.product
+                                                            .productPrice *
+                                                        double.parse(quantity
+                                                            .toString()),
+                                                    status: 'Pending',
+                                                    size: size);
+                                                _cartService.setData(cart);
+                                                 debugPrint(
+                                                    'cart page:${size.toString()}');
+                                                showDialog(
+                                                  context: context,
+                                                  builder: (context) =>
+                                                      AlertDialog(
+                                                    title: Text('Add to cart'),
+                                                    content: Text(
+                                                        'Added sucessfully to the cart'),
+                                                    actions: [
+                                                      TextButton(
+                                                        onPressed: () {
+                                                          // Close the AlertDialog
+                                                          Navigator.of(context)
+                                                              .pop();
+                                                        },
+                                                        child:
+                                                            const Text('Close'),
+                                                      ),
+                                                    ],
+                                                  ),
+                                                );
+                                                switctValue = false;
+                                              } else {
+                                                showDialog(
+                                                    context: context,
+                                                    builder: (context) =>
+                                                        AlertDialog(
+                                                          title: const Text(
+                                                              'Retry'),
+                                                          content: const Text(
+                                                              'This added before to the cart'),
+                                                          actions: [
+                                                            TextButton(
+                                                                onPressed: () {
+                                                                  Navigator.pop(
+                                                                      context);
+                                                                },
+                                                                child: Text(
+                                                                    'close'))
+                                                          ],
+                                                        ));
+                                              }
+                                            },
+                                            child: Row(
+                                              children: [
+                                                const Icon(
+                                                  Icons.shop_2,
+                                                  color: AppColors.white,
+                                                ),
+                                                const SizedBox(
+                                                  width: 10,
+                                                ),
+                                                Text(
+                                                  'Add to cart',
+                                                  style: Theme.of(context)
+                                                      .textTheme
+                                                      .bodyMedium!
+                                                      .copyWith(
+                                                        fontSize: 16,
+                                                        color: AppColors.white,
+                                                      ),
+                                                )
+                                              ],
+                                            ));
                                       }
                                       if (state is QuantityChanged) {
                                         quantity = state.quantity;
@@ -295,9 +385,11 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                             .productPrice *
                                                         double.parse(quantity
                                                             .toString()),
-                                                    status: 'Pending');
-                                                //shoppingCart.add(cart);
+                                                    status: 'Pending',
+                                                    size: size);
                                                 _cartService.setData(cart);
+                                                 debugPrint(
+                                                    'cart page:${size.toString()}');
                                                 showDialog(
                                                   context: context,
                                                   builder: (context) =>
@@ -383,8 +475,10 @@ class _ProductDetailsState extends State<ProductDetails> {
                                                     totalPrice: widget.product
                                                             .productPrice *
                                                         1.0,
-                                                    status: 'Pending');
-                                                //shoppingCart.add(cart);
+                                                    status: 'Pending',
+                                                    size: size);
+                                                debugPrint(
+                                                    'cart page:${size.toString()}');
                                                 _cartService.setData(cart);
                                                 showDialog(
                                                   context: context,

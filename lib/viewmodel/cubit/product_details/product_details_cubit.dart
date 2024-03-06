@@ -38,6 +38,6 @@ class ProductDetailsCubit extends Cubit<ProductDetailsStatus> {
 
   void changeSize(ProductSize productSize) {
     size = productSize;
-    emit(SizeChange(size!));
+    emit(SizeChange(size));
   }
 }

@@ -23,6 +23,6 @@ class QuantityChanged extends ProductDetailsStatus {
 }
 
 class SizeChange extends ProductDetailsStatus {
-  final ProductSize size;
+  final ProductSize? size;
   SizeChange(this.size);
 }
