@@ -28,38 +28,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
   @override
   void initState() {
     super.initState();
-    //sendUser();
-    //sendProducts();
-    //sendCategories();
-    //sendAds();
+    
   }
-
-  //Upload data to firestore
-  /* void sendProducts() async {
-    dummy_product.forEach((product) async {
-      await _firestoreService.setData(
-          path: ApiPaths.getProduct(product.productId), data: product.toMap());
-    });
-  }
-
-  void sendCategories() async {
-    dummy_categories.forEach((cat) async {
-      await _firestoreService.setData(
-          path: ApiPaths.getCategories(cat.categoryId), data: cat.toMap());
-    });
-  }
-
-  void sendUser() async {
-    await _firestoreService.setData(
-        path: ApiPaths.getUser(dummyUser.id), data: dummyUser.toMap());
-  }
-
-  void sendAds() async {
-    dummy_ads.forEach((ad) async {
-      await _firestoreService.setData(
-          path: ApiPaths.getAds(ad.adId), data: ad.toMap());
-    });
-  }*/
 
   List<Widget> _buildScreens() {
     return [
@@ -91,8 +61,8 @@ class _CustomBottomBarState extends State<CustomBottomBar> {
         inactiveColorPrimary: AppColors.grey,
       )),
       PersistentBottomNavBarItem(
-        icon: const Icon(Icons.person),
-        title: ("Profile"),
+        icon: const Icon(Icons.settings),
+        title: ("Settings"),
         activeColorPrimary: AppColors.blue,
         inactiveColorPrimary: AppColors.grey,
       ),

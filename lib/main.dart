@@ -28,24 +28,24 @@ class MyApp extends StatelessWidget {
         cubit.getCurrentUser();
         return cubit;
       },
-      child: Builder(
-        builder: (context) {
-          final cubit = AuthCubit();
-          return BlocBuilder<AuthCubit, AuthState>(
-            bloc:cubit,
-            buildWhen: (previous, current) => current is AuthSuccess||
-            current is AuthInitial,
-            builder: (context, state) {
-              return MaterialApp(
-                debugShowCheckedModeBanner: false,
-                home:state is AuthInitial? const LoginPage():const CustomBottomBar(),
-                theme: AppTheme.ligtTheme,
-                //check dark theme
-              );
-            },
-          );
-        }
-      ),
+      child: Builder(builder: (context) {
+        final cubit = AuthCubit();
+        return BlocBuilder<AuthCubit, AuthState>(
+          bloc: cubit,
+          buildWhen: (previous, current) =>
+              current is AuthSuccess || current is AuthInitial,
+          builder: (context, state) {
+            return MaterialApp(
+              debugShowCheckedModeBanner: false,
+              home: state is AuthInitial
+                  ? const LoginPage()
+                  : const CustomBottomBar(),
+              theme: AppTheme.ligtTheme,
+              //check dark theme
+            );
+          },
+        );
+      }),
     );
   }
 }

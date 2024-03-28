@@ -50,8 +50,6 @@ class _RegisterFormState extends State<RegisterForm> {
   }
 
   String? validPassword() {
-    //RegExp passRegex =
-    //RegExp(r'^(?=.*?[A-Z])(?=.*?[a-z])(?=.*?[0-9])(?=.*?[!@#\$&*~]).{8,}$');
     if (_passwordController.text.length >= 6) {
       return null;
     } else {
@@ -85,6 +83,7 @@ class _RegisterFormState extends State<RegisterForm> {
 
   @override
   Widget build(BuildContext context) {
+   
     final cubit = BlocProvider.of<AuthCubit>(context);
     return Form(
         key: _globalKey,
@@ -123,10 +122,11 @@ class _RegisterFormState extends State<RegisterForm> {
             const SizedBox(
               height: 15,
             ),
-            TextFormField(
+           TextFormField(
                 controller: _addressController,
                 validator: (value) => validInput(value!),
                 decoration: InputDecoration(hintText: 'Enter Address')),
+          
             const SizedBox(
               height: 15,
             ),

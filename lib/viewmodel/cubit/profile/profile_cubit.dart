@@ -15,7 +15,9 @@ class PorfileCubit extends Cubit<ProfileStatus> {
   void getDatat() async {
     emit(ProfileLoading());
     try {
+      
       final user = await _authService.currentUser();
+      
       debugPrint('profile cubit:${user?.email.toString()}');
       final users = await _userService.getData();
       final dummyUserData =

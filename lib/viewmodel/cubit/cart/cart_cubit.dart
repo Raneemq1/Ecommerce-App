@@ -15,8 +15,9 @@ class CartCubit extends Cubit<CartStatus> {
     try {
       var products = await homeService.getData();
       var orders = await cartService.getData();
-
-      emit(CartLoaded(orders, products));
+      double totalPrice=0;
+      orders.forEach((order)=>totalPrice+=order.totalPrice);
+      emit(CartLoaded(orders, products,totalPrice));
     } catch (e) {
       emit(CartError(e.toString()));
     }
@@ -26,7 +27,8 @@ class CartCubit extends Cubit<CartStatus> {
      cartService.deleteData(cartId);
      var products = await homeService.getData();
       var orders = await cartService.getData();
-
-      emit(CartLoaded(orders, products));
+      double totalPrice=0;
+      orders.forEach((order)=>totalPrice+=order.totalPrice); 
+      emit(CartLoaded(orders, products,totalPrice));
   }
 }
